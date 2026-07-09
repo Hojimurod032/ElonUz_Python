@@ -675,16 +675,16 @@
 
 <header class="site">
     <div class="wrap topbar">
-        <a href="home.html" class="brand"><span class="dot"></span>AutoElon</a>
+        <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
         <nav class="nav">
-            <a href="home.html">Bosh sahifa</a>
+            <a href="{% url 'home' %}">Bosh sahifa</a>
             <a href="#">Avtomobillar</a>
             <a href="#">Ko'chmas mulk</a>
             <a href="#">Elektronika</a>
         </nav>
         <div class="top-actions">
-            <a href="auth.html" class="btn btn-ghost">Kirish</a>
-            <a href="profil.html" class="btn btn-primary">
+            <a href="{% url 'auth' %}" class="btn btn-ghost">Kirish</a>
+            <a href="{% url 'profile' %}" class="btn btn-primary">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
                     <path d="M12 5v14M5 12h14"/>
                 </svg>
@@ -696,7 +696,7 @@
 
 <div class="wrap">
     <div class="crumb">
-        <a href="home.html">Bosh sahifa</a> <span>›</span> <a href="#">Avtomobillar</a> <span>›</span> <span>Chevrolet Cobalt</span>
+        <a href="{% url 'home' %}">Bosh sahifa</a> <span>›</span> <a href="#">Avtomobillar</a> <span>›</span> <span>Chevrolet Cobalt</span>
     </div>
 
     <div class="detail-layout">
@@ -810,7 +810,7 @@
         <div><h2>O'xshash e'lonlar</h2>
             <div class="road-rule"></div>
         </div>
-        <a href="home.html" style="font-size:13.5px;font-weight:700;color:var(--primary);">Barchasini ko'rish →</a>
+        <a href="{% url 'home' %}" style="font-size:13.5px;font-weight:700;color:var(--primary);">Barchasini ko'rish →</a>
     </div>
     <div class="grid">
         <div class="card">

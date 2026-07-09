@@ -196,20 +196,20 @@
 
 <header class="site">
   <div class="wrap topbar">
-    <a href="home.html" class="brand"><span class="dot"></span>AutoElon</a>
+    <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
     <nav class="nav">
-      <a href="home.html" class="active">Bosh sahifa</a>
+      <a href="{% url 'home' %}" class="active">Bosh sahifa</a>
       <a href="#">Avtomobillar</a>
       <a href="#">Ko'chmas mulk</a>
       <a href="#">Elektronika</a>
       <a href="#">Barcha kategoriyalar</a>
     </nav>
     <div class="top-actions">
-      <a href="auth.html" class="icon-btn" title="Kirish">
+      <a href="{% url 'auth' %}" class="icon-btn" title="Kirish">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6"/></svg>
       </a>
-      <a href="auth.html" class="btn btn-ghost">Kirish</a>
-      <a href="profil.html" class="btn btn-primary">
+      <a href="{% url 'auth' %}" class="btn btn-ghost">Kirish</a>
+      <a href="{% url 'profile' %}" class="btn btn-primary">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
         Elon joylash
       </a>
@@ -273,11 +273,11 @@
         <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
         </button>
-        <a href="detail.html"><img src="https://picsum.photos/seed/auto1/480/360" alt="Chevrolet Cobalt"></a>
+        <a href="{% url 'detail' %}"><img src="https://picsum.photos/seed/auto1/480/360" alt="Chevrolet Cobalt"></a>
       </div>
       <div class="card-body">
         <span class="price-tag">148 500 000 so'm</span>
-        <h3 class="card-title"><a href="detail.html">Chevrolet Cobalt, 2021 yil, oq rang, gaz-benzin</a></h3>
+        <h3 class="card-title"><a href="{% url 'detail' %}">Chevrolet Cobalt, 2021 yil, oq rang, gaz-benzin</a></h3>
         <div class="card-meta">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
           Toshkent · Bugun
@@ -415,7 +415,7 @@
       <h3>E'loningizni bugun joylang</h3>
       <p>Ro'yxatdan o'ting va bir necha daqiqada minglab xaridorlarga chiqing — bepul va oddiy.</p>
     </div>
-    <a href="profil.html" class="btn">Elon joylash →</a>
+    <a href="{% url 'profile' %}" class="btn">Elon joylash →</a>
   </div>
 </main>
 
@@ -423,7 +423,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a href="home.html" class="brand"><span class="dot"></span>AutoElon</a>
+        <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
         <p style="color:var(--text-mute);font-size:13.5px;margin-top:12px;max-width:260px;">O'zbekistondagi eng yirik onlayn e'lonlar platformasi — sotib oling, soting, ijaraga bering.</p>
       </div>
       <div>
@@ -446,9 +446,9 @@
       <div>
         <h4>Hisob</h4>
         <ul>
-          <li><a href="auth.html">Kirish</a></li>
-          <li><a href="auth.html">Ro'yxatdan o'tish</a></li>
-          <li><a href="profil.html">Profil</a></li>
+          <li><a href="{% url 'auth' %}">Kirish</a></li>
+          <li><a href="{% url 'auth' %}">Ro'yxatdan o'tish</a></li>
+          <li><a href="{% url 'profile' %}">Profil</a></li>
         </ul>
       </div>
     </div>
