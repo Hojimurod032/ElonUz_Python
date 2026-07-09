@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoElon — Mening profilim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --bg-soft:#F6F7FA;
+    --bg-soft-2:#F0F2F6;
+    --border:#E7E9EE;
+    --text:#12151C;
+    --text-mute:#6B7280;
+    --text-faint:#9AA1AC;
+    --primary:#1E4FD8;
+    --primary-dark:#153AA6;
+    --primary-soft:#EAF0FE;
+    --accent:#FF6A3D;
+    --accent-dark:#E5541F;
+    --accent-soft:#FFF0E9;
+    --success:#16A34A;
+    --danger:#DC2626;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(18,21,28,.04), 0 8px 24px -12px rgba(18,21,28,.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg-soft);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.brand,.nav a,.btn,.card-title{font-family:'Manrope',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;margin:0;padding:0;}
+  button{font:inherit;cursor:pointer;}
+
+  .road-rule{height:3px;background-image:repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);border-radius:2px;}
+
+  header.site{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40;}
+  .topbar{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;height:70px;}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:20px;color:var(--text);}
+  .brand .dot{width:10px;height:10px;border-radius:3px;background:var(--accent);transform:rotate(45deg);}
+  nav.nav{display:flex;gap:22px;flex:1;}
+  nav.nav a{font-weight:600;font-size:14px;color:var(--text-mute);}
+  nav.nav a:hover{color:var(--text);}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:10px;font-weight:700;font-size:14px;padding:10px 18px;border:1px solid transparent;transition:all .15s;}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 16px -6px rgba(255,106,61,.55);}
+  .btn-primary:hover{background:var(--accent-dark);}
+  .btn-ghost{background:transparent;color:var(--text);border-color:var(--border);}
+  .btn-ghost:hover{background:var(--bg-soft);}
+
+  .layout{max-width:1180px;margin:0 auto;padding:32px 24px 60px;display:grid;grid-template-columns:270px 1fr;gap:24px;align-items:start;}
+
+  /* ---------- Sidebar ---------- */
+  .side-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px 22px;box-shadow:var(--shadow);}
+  .avatar{
+    width:72px;height:72px;border-radius:50%;margin:0 auto 14px;
+    background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:26px;
+  }
+  .side-card h3{text-align:center;margin:0 0 3px;font-size:17px;}
+  .side-card .phone{text-align:center;color:var(--text-mute);font-size:13px;margin-bottom:16px;}
+  .verified{
+    display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700;color:var(--success);
+    background:#EEFBF3;border-radius:8px;padding:6px 0;margin-bottom:18px;
+  }
+  .stat-mini{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--border);}
+  .stat-mini div{text-align:center;flex:1;}
+  .stat-mini b{display:block;font-size:17px;font-weight:800;}
+  .stat-mini span{font-size:11.5px;color:var(--text-faint);}
+
+  .side-nav{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;}
+  .side-nav button{
+    width:100%;text-align:left;display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;
+    border:none;background:transparent;color:var(--text-mute);font-weight:600;font-size:14px;transition:all .15s;
+  }
+  .side-nav button:hover{background:var(--bg-soft);color:var(--text);}
+  .side-nav button.is-active{background:var(--primary-soft);color:var(--primary-dark);}
+  .side-nav button.danger:hover{background:#FEF2F2;color:var(--danger);}
+  .side-nav svg{flex-shrink:0;}
+
+  /* ---------- Main content ---------- */
+  .panel{display:none;}
+  .panel.is-active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .panel-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .panel-head h2{font-size:23px;font-weight:800;margin:0;}
+  .panel-head .road-rule{width:60px;margin:8px 0 22px;}
+  .panel-head .count{color:var(--text-faint);font-size:13.5px;font-weight:600;}
+
+  .my-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .my-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+  .my-card .media{position:relative;aspect-ratio:4/3;background:var(--bg-soft-2);}
+  .my-card .media img{width:100%;height:100%;object-fit:cover;}
+  .status-tag{position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;padding:4px 9px;border-radius:6px;color:#fff;}
+  .status-tag.active{background:var(--success);}
+  .status-tag.pending{background:#D97706;}
+  .my-card .body{padding:13px 14px 15px;}
+  .my-card .price{font-weight:800;color:var(--primary-dark);font-size:16px;margin-bottom:5px;}
+  .my-card .title{font-size:13.5px;font-weight:700;margin:0 0 10px;line-height:1.35;min-height:36px;}
+  .my-card .actions{display:flex;gap:8px;}
+  .icon-sm{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 0;border-radius:8px;
+    border:1px solid var(--border);font-size:12.5px;font-weight:600;color:var(--text-mute);background:#fff;
+  }
+  .icon-sm:hover{background:var(--bg-soft);color:var(--text);}
+  .icon-sm.del:hover{background:#FEF2F2;color:var(--danger);border-color:#FECACA;}
+
+  /* ---------- Post ad form ---------- */
+  .form-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px;max-width:720px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .field{margin-bottom:16px;}
+  .field.full{grid-column:1 / -1;}
+  .field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--border);font-family:'Inter';font-size:14px;
+    outline:none;transition:border-color .15s, box-shadow .15s;color:var(--text);background:#fff;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .upload-box{
+    border:1.5px dashed var(--border);border-radius:12px;padding:30px;text-align:center;color:var(--text-faint);
+    font-size:13.5px;background:var(--bg-soft);cursor:pointer;
+  }
+  .upload-box:hover{border-color:var(--primary);color:var(--primary);}
+  .upload-box svg{margin-bottom:8px;}
+
+  /* ---------- Settings ---------- */
+  .settings-row{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);}
+  .settings-row:last-child{border-bottom:none;}
+  .settings-row .label b{display:block;font-size:14.5px;font-weight:700;}
+  .settings-row .label span{font-size:12.5px;color:var(--text-mute);}
+  .toggle{width:42px;height:24px;border-radius:999px;background:var(--border);position:relative;border:none;flex-shrink:0;}
+  .toggle::after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+  .toggle.on{background:var(--primary);}
+  .toggle.on::after{left:21px;}
+
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    nav.nav{display:none;}
+    .my-grid{grid-template-columns:1fr 1fr;}
+    .form-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .my-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="topbar">
+    <a href="home.html" class="brand"><span class="dot"></span>AutoElon</a>
+    <nav class="nav">
+      <a href="home.html">Bosh sahifa</a>
+      <a href="#">Avtomobillar</a>
+      <a href="#">Ko'chmas mulk</a>
+    </nav>
+    <a href="home.html" class="btn btn-ghost">Chiqish</a>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="side-card">
+    <div class="avatar">HB</div>
+    <h3>Hojimurod B.</h3>
+    <div class="phone">+998 90 123 45 67</div>
+    <div class="verified">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+      Raqam tasdiqlangan
+    </div>
+    <div class="stat-mini">
+      <div><b>12</b><span>e'lon</span></div>
+      <div><b>4.9</b><span>reyting</span></div>
+      <div><b>230</b><span>ko'rish</span></div>
+    </div>
+    <ul class="side-nav">
+      <li><button class="is-active" onclick="showPanel('listings', this)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Mening e'lonlarim
+      </button></li>
+      <li><button onclick="showPanel('new', this)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+        Yangi e'lon joylash
+      </button></li>
+      <li><button onclick="showPanel('settings', this)">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.6 1z"/></svg>
+        Profil sozlamalari
+      </button></li>
+      <li><button class="danger" onclick="location.href='home.html'">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        Chiqish
+      </button></li>
+    </ul>
+  </aside>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Panel: Mening e'lonlarim -->
+    <section id="panel-listings" class="panel is-active">
+      <div class="panel-head">
+        <div><h2>Mening e'lonlarim</h2><div class="road-rule"></div></div>
+        <span class="count">12 ta e'lon</span>
+      </div>
+      <div class="my-grid">
+
+        <div class="my-card">
+          <div class="media">
+            <span class="status-tag active">Faol</span>
+            <img src="https://picsum.photos/seed/mycar1/400/300" alt="Chevrolet Cobalt">
+          </div>
+          <div class="body">
+            <div class="price">148 500 000 so'm</div>
+            <p class="title">Chevrolet Cobalt, 2021 yil, oq rang</p>
+            <div class="actions">
+              <button class="icon-sm">✎ Tahrirlash</button>
+              <button class="icon-sm del">🗑</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-card">
+          <div class="media">
+            <span class="status-tag pending">Ko'rib chiqilmoqda</span>
+            <img src="https://picsum.photos/seed/myphone2/400/300" alt="iPhone 14 Pro">
+          </div>
+          <div class="body">
+            <div class="price">9 200 000 so'm</div>
+            <p class="title">iPhone 14 Pro 256GB, deep purple</p>
+            <div class="actions">
+              <button class="icon-sm">✎ Tahrirlash</button>
+              <button class="icon-sm del">🗑</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="my-card">
+          <div class="media">
+            <span class="status-tag active">Faol</span>
+            <img src="https://picsum.photos/seed/myflat3/400/300" alt="Kvartira">
+          </div>
+          <div class="body">
+            <div class="price">$38 000</div>
+            <p class="title">2 xonali kvartira, Chilonzor</p>
+            <div class="actions">
+              <button class="icon-sm">✎ Tahrirlash</button>
+              <button class="icon-sm del">🗑</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Panel: Yangi e'lon joylash -->
+    <section id="panel-new" class="panel">
+      <div class="panel-head">
+        <div><h2>Yangi e'lon joylash</h2><div class="road-rule"></div></div>
+      </div>
+      <div class="form-card">
+        <form onsubmit="event.preventDefault(); alert('E\'lon yuborildi (namuna). Backendni o\'zingiz ulaysiz.');">
+          <div class="field full">
+            <label>E'lon sarlavhasi</label>
+            <input type="text" placeholder="Masalan: Chevrolet Cobalt, 2021 yil">
+          </div>
+          <div class="form-grid">
+            <div class="field">
+              <label>Kategoriya</label>
+              <select>
+                <option>Avtomobillar</option>
+                <option>Ko'chmas mulk</option>
+                <option>Elektronika</option>
+                <option>Uy va bog'</option>
+                <option>Boshqalar</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Joylashuv</label>
+              <select>
+                <option>Toshkent</option>
+                <option>Samarqand</option>
+                <option>Andijon</option>
+                <option>Buxoro</option>
+                <option>Farg'ona</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Narx</label>
+              <input type="text" placeholder="Masalan: 148 500 000">
+            </div>
+            <div class="field">
+              <label>Valyuta</label>
+              <select>
+                <option>UZS (so'm)</option>
+                <option>USD ($)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field full">
+            <label>Tavsif</label>
+            <textarea placeholder="Mahsulot yoki xizmat haqida batafsil yozing..."></textarea>
+          </div>
+          <div class="field full">
+            <label>Rasmlar</label>
+            <div class="upload-box">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+              <div>Rasmlarni shu yerga tashlang yoki tanlash uchun bosing</div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:13px 0;">E'lonni joylash</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Panel: Sozlamalar -->
+    <section id="panel-settings" class="panel">
+      <div class="panel-head">
+        <div><h2>Profil sozlamalari</h2><div class="road-rule"></div></div>
+      </div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="field">
+            <label>Ism</label>
+            <input type="text" value="Hojimurod">
+          </div>
+          <div class="field">
+            <label>Familiya</label>
+            <input type="text" value="B.">
+          </div>
+          <div class="field">
+            <label>Telefon raqam</label>
+            <input type="text" value="+998 90 123 45 67">
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="text" placeholder="email@example.com">
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-bottom:8px;">O'zgarishlarni saqlash</button>
+
+        <div style="margin-top:26px;">
+          <div class="settings-row">
+            <div class="label"><b>Bildirishnomalar</b><span>Yangi xabar va takliflar haqida email olish</span></div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div class="label"><b>Telefon raqamni ko'rsatish</b><span>Boshqa foydalanuvchilar raqamingizni ko'ra oladi</span></div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div class="label"><b>Ikki bosqichli tasdiqlash</b><span>Hisobingiz xavfsizligini oshiring</span></div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  function showPanel(name, btn){
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('is-active'));
+    document.getElementById('panel-' + name).classList.add('is-active');
+    document.querySelectorAll('.side-nav button').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+{% if messages %}
+    <div class="toast-wrap">
+        {% for message in messages %}
+            <div class="toast {{ message.tags }}">
+      <span class="toast-icon">
+        {% if message.tags == 'success' %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path
+                    d="M20 6 9 17l-5-5"/></svg>
+        {% elif message.tags == 'error' %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><circle
+                    cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+        {% elif message.tags == 'warning' %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path
+                    d="M12 9v4M12 17h.01"/><path
+                    d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        {% else %}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle
+                    cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+        {% endif %}
+      </span>
+                <span class="toast-text">{{ message }}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">&times;</button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<style>
+    .toast-wrap {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 340px;
+    }
+
+    .toast {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #fff;
+        border: 1px solid #E7E9EE;
+        border-left: 4px solid #E7E9EE;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px -8px rgba(18, 21, 28, .18);
+        padding: 12px 14px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13.5px;
+        color: #12151C;
+        animation: toast-in .25s ease;
+    }
+
+    @keyframes toast-in {
+        from {
+            opacity: 0;
+            transform: translateX(16px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .toast-icon {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .toast-text {
+        flex: 1;
+        line-height: 1.4;
+    }
+
+    .toast-close {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        color: #9AA1AC;
+        font-size: 17px;
+        line-height: 1;
+        cursor: pointer;
+        padding: 0 2px;
+    }
+
+    .toast-close:hover {
+        color: #12151C;
+    }
+
+    .toast.success {
+        border-left-color: #16A34A;
+    }
+
+    .toast.success .toast-icon {
+        background: #EAFBF1;
+        color: #16A34A;
+    }
+
+    .toast.error {
+        border-left-color: #DC2626;
+    }
+
+    .toast.error .toast-icon {
+        background: #FEF2F2;
+        color: #DC2626;
+    }
+
+    .toast.warning {
+        border-left-color: #D97706;
+    }
+
+    .toast.warning .toast-icon {
+        background: #FFF7E6;
+        color: #D97706;
+    }
+
+    .toast.info {
+        border-left-color: #1E4FD8;
+    }
+
+    .toast.info .toast-icon {
+        background: #EAF0FE;
+        color: #1E4FD8;
+    }
+</style>
+
+<script>
+    setTimeout(function () {
+        document.querySelectorAll('.toast').forEach(function (t) {
+            t.remove();
+        });
+    }, 5000);
+</script>
