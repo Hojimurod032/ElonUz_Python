@@ -1,228 +1,516 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AutoElon — Kirish yoki ro'yxatdan o'tish</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#ffffff;
-    --bg-soft:#F6F7FA;
-    --border:#E7E9EE;
-    --text:#12151C;
-    --text-mute:#6B7280;
-    --text-faint:#9AA1AC;
-    --primary:#1E4FD8;
-    --primary-dark:#153AA6;
-    --primary-soft:#EAF0FE;
-    --accent:#FF6A3D;
-    --accent-dark:#E5541F;
-    --shadow:0 1px 2px rgba(18,21,28,.04), 0 8px 24px -12px rgba(18,21,28,.10);
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;height:100%;}
-  body{
-    font-family:'Inter',sans-serif;color:var(--text);background:var(--bg);
-    display:grid;grid-template-columns:1fr 1fr;min-height:100vh;
-  }
-  h1,h2,.brand,.btn,.pill button{font-family:'Manrope',sans-serif;}
-  a{color:inherit;}
-  button{font:inherit;cursor:pointer;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElonUz — Kirish yoki ro'yxatdan o'tish</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #F6F7FA;
+            --border: #E7E9EE;
+            --text: #12151C;
+            --text-mute: #6B7280;
+            --text-faint: #9AA1AC;
+            --primary: #1E4FD8;
+            --primary-dark: #153AA6;
+            --primary-soft: #EAF0FE;
+            --accent: #FF6A3D;
+            --accent-dark: #E5541F;
+            --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
+        }
 
-  /* ---------- Left brand panel ---------- */
-  .panel-left{
-    position:relative;overflow:hidden;padding:52px;
-    background:linear-gradient(150deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color:#fff;display:flex;flex-direction:column;justify-content:space-between;
-  }
-  .panel-left::before{
-    content:"";position:absolute;inset:0;
-    background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 30px);
-    pointer-events:none;
-  }
-  .panel-left::after{
-    content:"";position:absolute;right:-120px;bottom:-120px;width:420px;height:420px;border-radius:50%;
-    background:radial-gradient(circle, rgba(255,255,255,.10), transparent 70%);
-  }
-  .brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:21px;color:#fff;position:relative;z-index:1;}
-  .brand .dot{width:11px;height:11px;border-radius:3px;background:var(--accent);transform:rotate(45deg);}
-  .road-rule-light{
-    height:3px;width:64px;margin:22px 0 20px;border-radius:2px;
-    background-image:repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
-  }
-  .panel-left .pitch{position:relative;z-index:1;max-width:400px;}
-  .panel-left h1{font-size:32px;line-height:1.2;font-weight:800;margin:0 0 14px;}
-  .panel-left p{font-size:15px;color:rgba(255,255,255,.82);line-height:1.6;}
-  .stat-row{display:flex;gap:30px;position:relative;z-index:1;margin-top:36px;}
-  .stat-row div b{display:block;font-size:22px;font-weight:800;}
-  .stat-row div span{font-size:12.5px;color:rgba(255,255,255,.7);}
-  .quote{
-    position:relative;z-index:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
-    border-radius:14px;padding:18px 20px;font-size:13.5px;line-height:1.55;color:rgba(255,255,255,.9);
-  }
+        * {
+            box-sizing: border-box;
+        }
 
-  /* ---------- Right form panel ---------- */
-  .panel-right{display:flex;align-items:center;justify-content:center;padding:40px;}
-  .form-shell{width:100%;max-width:400px;}
-  .form-shell > .brand{display:none;color:var(--text);margin-bottom:28px;}
-  .form-shell h2{font-size:25px;font-weight:800;margin:0 0 6px;}
-  .form-shell .sub{color:var(--text-mute);font-size:14px;margin:0 0 26px;}
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
 
-  .pill{
-    display:flex;background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:4px;margin-bottom:30px;
-  }
-  .pill button{
-    flex:1;border:none;background:transparent;padding:10px 0;border-radius:9px;font-weight:700;font-size:14px;color:var(--text-mute);
-    transition:all .18s ease;
-  }
-  .pill button.is-active{background:#fff;color:var(--text);box-shadow:var(--shadow);}
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            display: grid;
+            grid-template-columns:1fr 1fr;
+            min-height: 100vh;
+        }
 
-  .field{margin-bottom:16px;}
-  .field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:var(--text);}
-  .field input{
-    width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);font-family:'Inter';font-size:14.5px;
-    outline:none;transition:border-color .15s, box-shadow .15s;background:#fff;color:var(--text);
-  }
-  .field input::placeholder{color:var(--text-faint);}
-  .field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft);}
-  .field-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:2px 0 22px;}
-  .field-row label{display:flex;align-items:center;gap:8px;color:var(--text-mute);font-weight:500;}
-  .field-row a{color:var(--primary);font-weight:600;}
-  .checkline{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text-mute);margin:4px 0 22px;line-height:1.5;}
-  .checkline a{color:var(--primary);font-weight:600;}
-  input[type=checkbox]{width:16px;height:16px;accent-color:var(--primary);margin-top:1px;flex-shrink:0;}
+        h1, h2, .brand, .btn, .pill button {
+            font-family: 'Manrope', sans-serif;
+        }
 
-  .btn{
-    width:100%;padding:13px 0;border-radius:10px;border:none;font-weight:700;font-size:15px;
-    background:var(--accent);color:#fff;box-shadow:0 8px 20px -8px rgba(255,106,61,.55);transition:background .15s;
-  }
-  .btn:hover{background:var(--accent-dark);}
+        a {
+            color: inherit;
+        }
 
-  .divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--text-faint);font-size:12.5px;}
-  .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border);}
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
 
-  .oauth-row{display:flex;gap:10px;}
-  .oauth-btn{
-    flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 0;
-    border:1px solid var(--border);border-radius:10px;font-weight:600;font-size:13.5px;color:var(--text);background:#fff;
-  }
-  .oauth-btn:hover{background:var(--bg-soft);}
+        /* ---------- Left brand panel ---------- */
+        .panel-left {
+            position: relative;
+            overflow: hidden;
+            padding: 52px;
+            background: linear-gradient(150deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-  .switch-line{text-align:center;font-size:13.5px;color:var(--text-mute);margin-top:26px;}
-  .switch-line button{background:none;border:none;color:var(--primary);font-weight:700;font-size:13.5px;padding:0;}
+        .panel-left::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(115deg, rgba(255, 255, 255, .05) 0 2px, transparent 2px 30px);
+            pointer-events: none;
+        }
 
-  .pane{display:none;}
-  .pane.is-active{display:block;animation:fade .25s ease;}
-  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+        .panel-left::after {
+            content: "";
+            position: absolute;
+            right: -120px;
+            bottom: -120px;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, .10), transparent 70%);
+        }
 
-  @media (max-width:900px){
-    body{grid-template-columns:1fr;}
-    .panel-left{display:none;}
-    .form-shell > .brand{display:flex;}
-  }
-</style>
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-weight: 800;
+            font-size: 21px;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 3px;
+            background: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        .road-rule-light {
+            height: 3px;
+            width: 64px;
+            margin: 22px 0 20px;
+            border-radius: 2px;
+            background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
+        }
+
+        .panel-left .pitch {
+            position: relative;
+            z-index: 1;
+            max-width: 400px;
+        }
+
+        .panel-left h1 {
+            font-size: 32px;
+            line-height: 1.2;
+            font-weight: 800;
+            margin: 0 0 14px;
+        }
+
+        .panel-left p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, .82);
+            line-height: 1.6;
+        }
+
+        .stat-row {
+            display: flex;
+            gap: 30px;
+            position: relative;
+            z-index: 1;
+            margin-top: 36px;
+        }
+
+        .stat-row div b {
+            display: block;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .stat-row div span {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .quote {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 14px;
+            padding: 18px 20px;
+            font-size: 13.5px;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, .9);
+        }
+
+        /* ---------- Right form panel ---------- */
+        .panel-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .form-shell {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-shell > .brand {
+            display: none;
+            color: var(--text);
+            margin-bottom: 28px;
+        }
+
+        .form-shell h2 {
+            font-size: 25px;
+            font-weight: 800;
+            margin: 0 0 6px;
+        }
+
+        .form-shell .sub {
+            color: var(--text-mute);
+            font-size: 14px;
+            margin: 0 0 26px;
+        }
+
+        .pill {
+            display: flex;
+            background: var(--bg-soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 30px;
+        }
+
+        .pill button {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-mute);
+            transition: all .18s ease;
+        }
+
+        .pill button.is-active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: var(--shadow);
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: var(--text);
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-family: 'Inter';
+            font-size: 14.5px;
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .field input::placeholder {
+            color: var(--text-faint);
+        }
+
+        .field input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-soft);
+        }
+
+        .field-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            margin: 2px 0 22px;
+        }
+
+        .field-row label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-mute);
+            font-weight: 500;
+        }
+
+        .field-row a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .checkline {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            font-size: 13px;
+            color: var(--text-mute);
+            margin: 4px 0 22px;
+            line-height: 1.5;
+        }
+
+        .checkline a {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        input[type=checkbox] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 13px 0;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 15px;
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(255, 106, 61, .55);
+            transition: background .15s;
+        }
+
+        .btn:hover {
+            background: var(--accent-dark);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: var(--text-faint);
+            font-size: 12.5px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .oauth-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .oauth-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 0;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13.5px;
+            color: var(--text);
+            background: #fff;
+        }
+
+        .oauth-btn:hover {
+            background: var(--bg-soft);
+        }
+
+        .switch-line {
+            text-align: center;
+            font-size: 13.5px;
+            color: var(--text-mute);
+            margin-top: 26px;
+        }
+
+        .switch-line button {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13.5px;
+            padding: 0;
+        }
+
+        .pane {
+            display: none;
+        }
+
+        .pane.is-active {
+            display: block;
+            animation: fade .25s ease;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 900px) {
+            body {
+                grid-template-columns:1fr;
+            }
+
+            .panel-left {
+                display: none;
+            }
+
+            .form-shell > .brand {
+                display: flex;
+            }
+        }
+    </style>
 </head>
 <body>
 
+{% include 'Error.html' %}
 <div class="panel-left">
-  <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
-  <div class="pitch">
-    <div class="road-rule-light"></div>
-    <h1>Har bir yo'l bitta e'londan boshlanadi.</h1>
-    <p>Minglab xaridor va sotuvchi allaqachon AutoElon'da. Hisobingizga kiring va o'z bozoringizni boshqarishni davom eting.</p>
-    <div class="quote">"AutoElon orqali mashinamni bir haftada sotdim — jarayoni juda oddiy edi." — Foydalanuvchi</div>
-  </div>
-  <div class="stat-row">
-    <div><b>128K+</b><span>faol e'lon</span></div>
-    <div><b>92K+</b><span>foydalanuvchi</span></div>
-    <div><b>36</b><span>viloyat</span></div>
-  </div>
+    <a href="{% url 'home' %}" class="brand"><span class="dot"></span>ElonUz</a>
+    <div class="pitch">
+        <div class="road-rule-light"></div>
+        <h1>Har bir yo'l bitta e'londan boshlanadi.</h1>
+        <p>Minglab xaridor va sotuvchi allaqachon ElonUz'da. Hisobingizga kiring va o'z bozoringizni boshqarishni
+            davom eting.</p>
+        <div class="quote">"ElonUz orqali mashinamni bir haftada sotdim — jarayoni juda oddiy edi." — Foydalanuvchi
+        </div>
+    </div>
+    <div class="stat-row">
+        <div><b>128K+</b><span>faol e'lon</span></div>
+        <div><b>92K+</b><span>foydalanuvchi</span></div>
+        <div><b>36</b><span>viloyat</span></div>
+    </div>
 </div>
 
 <div class="panel-right">
-  <div class="form-shell">
-    <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
+    <div class="form-shell">
+        <a href="{% url 'home' %}" class="brand"><span class="dot"></span>ElonUz</a>
 
-    <div class="pill">
-      <button id="tab-login" class="is-active" onclick="showPane('login')">Kirish</button>
-      <button id="tab-register" onclick="showPane('register')">Ro'yxatdan o'tish</button>
+        <div class="pill">
+            <button id="tab-login" class="is-active" onclick="showPane('login')">Kirish</button>
+            <button id="tab-register" onclick="showPane('register')">Ro'yxatdan o'tish</button>
+        </div>
+
+        <div id="pane-login" class="pane is-active">
+            <h2>Xush kelibsiz</h2>
+            <p class="sub">Hisobingizga kirish uchun ma'lumotlaringizni kiriting.</p>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label>Telefon raqam yoki email</label>
+                    <input type="text" name="phone_number" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="field">
+                    <label>Parol</label>
+                    <input name="password" type="password" placeholder="••••••••">
+                </div>
+                <div class="field-row">
+                    <label><input type="checkbox">Meni eslab qol</label>
+                    <a href="#">Parolni unutdingizmi?</a>
+                </div>
+                <button type="submit" class="btn">Kirish</button>
+            </form>
+            <div class="divider">yoki</div>
+            <div class="oauth-row">
+                <button class="oauth-btn">Google</button>
+                <button class="oauth-btn">Telegram</button>
+            </div>
+            <p class="switch-line">Hisobingiz yo'qmi?
+                <button onclick="showPane('register')">Ro'yxatdan o'ting</button>
+            </p>
+        </div>
+
+        <!-- REGISTER -->
+        <div id="pane-register" class="pane">
+            <h2>Hisob yarating</h2>
+            <p class="sub">Bir necha daqiqada ro'yxatdan o'ting va e'lon joylashni boshlang.</p>
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label>To'liq ism</label>
+                    <input type="text" name="full_name" placeholder="Ism Familiya">
+                </div>
+                <div class="field">
+                    <label>Telefon raqam</label>
+                    <input name="phone_number" type="text" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="field">
+                    <label>Parol</label>
+                    <input type="password" name="password" placeholder="Kamida 8 ta belgi">
+                </div>
+                <div class="checkline">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">Men <a href="#">Foydalanish shartlari</a> va <a href="#">Maxfiylik siyosati</a>ga
+                        roziman.</label>
+                </div>
+                <button type="submit" class="btn">Ro'yxatdan o'tish</button>
+            </form>
+            <div class="divider">yoki</div>
+            <div class="oauth-row">
+                <button class="oauth-btn">Google</button>
+                <button class="oauth-btn">Telegram</button>
+            </div>
+            <p class="switch-line">Hisobingiz bormi?
+                <button onclick="showPane('login')">Kirish</button>
+            </p>
+        </div>
+
     </div>
-
-    <!-- LOGIN -->
-    <div id="pane-login" class="pane is-active">
-      <h2>Xush kelibsiz</h2>
-      <p class="sub">Hisobingizga kirish uchun ma'lumotlaringizni kiriting.</p>
-      <form onsubmit="event.preventDefault();">
-        <div class="field">
-          <label>Telefon raqam yoki email</label>
-          <input type="text" placeholder="+998 90 123 45 67">
-        </div>
-        <div class="field">
-          <label>Parol</label>
-          <input type="password" placeholder="••••••••">
-        </div>
-        <div class="field-row">
-          <label><input type="checkbox">Meni eslab qol</label>
-          <a href="#">Parolni unutdingizmi?</a>
-        </div>
-        <button type="submit" class="btn">Kirish</button>
-      </form>
-      <div class="divider">yoki</div>
-      <div class="oauth-row">
-        <button class="oauth-btn">Google</button>
-        <button class="oauth-btn">Telegram</button>
-      </div>
-      <p class="switch-line">Hisobingiz yo'qmi? <button onclick="showPane('register')">Ro'yxatdan o'ting</button></p>
-    </div>
-
-    <!-- REGISTER -->
-    <div id="pane-register" class="pane">
-      <h2>Hisob yarating</h2>
-      <p class="sub">Bir necha daqiqada ro'yxatdan o'ting va e'lon joylashni boshlang.</p>
-      <form onsubmit="event.preventDefault();">
-        <div class="field">
-          <label>To'liq ism</label>
-          <input type="text" placeholder="Ism Familiya">
-        </div>
-        <div class="field">
-          <label>Telefon raqam</label>
-          <input type="text" placeholder="+998 90 123 45 67">
-        </div>
-        <div class="field">
-          <label>Parol</label>
-          <input type="password" placeholder="Kamida 8 ta belgi">
-        </div>
-        <div class="field">
-          <label>Parolni tasdiqlang</label>
-          <input type="password" placeholder="••••••••">
-        </div>
-        <div class="checkline">
-          <input type="checkbox" id="terms">
-          <label for="terms">Men <a href="#">Foydalanish shartlari</a> va <a href="#">Maxfiylik siyosati</a>ga roziman.</label>
-        </div>
-        <button type="submit" class="btn">Ro'yxatdan o'tish</button>
-      </form>
-      <div class="divider">yoki</div>
-      <div class="oauth-row">
-        <button class="oauth-btn">Google</button>
-        <button class="oauth-btn">Telegram</button>
-      </div>
-      <p class="switch-line">Hisobingiz bormi? <button onclick="showPane('login')">Kirish</button></p>
-    </div>
-
-  </div>
 </div>
 
 <script>
-  function showPane(name){
-    document.getElementById('pane-login').classList.toggle('is-active', name==='login');
-    document.getElementById('pane-register').classList.toggle('is-active', name==='register');
-    document.getElementById('tab-login').classList.toggle('is-active', name==='login');
-    document.getElementById('tab-register').classList.toggle('is-active', name==='register');
-  }
+    function showPane(name) {
+        document.getElementById('pane-login').classList.toggle('is-active', name === 'login');
+        document.getElementById('pane-register').classList.toggle('is-active', name === 'register');
+        document.getElementById('tab-login').classList.toggle('is-active', name === 'login');
+        document.getElementById('tab-register').classList.toggle('is-active', name === 'register');
+    }
 </script>
 </body>
 </html>
