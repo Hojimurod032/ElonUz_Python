@@ -1,17 +1,17 @@
 {% extends 'Base.html' %}
-{% load humanize %}
+
+
 {% block base %}
     <!DOCTYPE html>
     <html lang="uz">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mening profilim — AutoElon</title>
+        <title>AutoElon — Mening profilim</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
               rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
         <style>
             :root {
                 --bg: #ffffff;
@@ -26,9 +26,9 @@
                 --primary-soft: #EAF0FE;
                 --accent: #FF6A3D;
                 --accent-dark: #E5541F;
-                --accent-soft: #FFF0E9;
+                --accent-soft: #271c16;
                 --success: #16A34A;
-                --success-soft: #00ff6a;
+                --success-soft: #EAFBF1;
                 --danger: #DC2626;
                 --danger-soft: #FEF2F2;
                 --radius: 14px;
@@ -40,7 +40,7 @@
                 margin: 0 auto;
                 padding: 32px 24px 60px;
                 display: grid;
-                grid-template-columns: 270px 1fr;
+                grid-template-columns:270px 1fr;
                 gap: 24px;
                 align-items: start;
             }
@@ -107,136 +107,6 @@
             .role-badge.admin {
                 background: var(--accent-soft);
                 color: var(--accent-dark);
-            }
-
-            .role-badge.gemini {
-                    font-size: 11.5px;
-                font-weight: 700;
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                color: #000000;
-                background: linear-gradient(135deg, rgba(0, 247, 255, 0.12), rgba(123, 97, 255, 0.15));
-                border: 1px solid rgba(0, 247, 255, 0.35);
-                border-radius: 999px;
-                backdrop-filter: blur(6px);
-                box-shadow: 0 0 8px rgba(0, 247, 255, 0.4),
-                0 0 18px rgba(123, 97, 255, 0.25),
-                inset 0 0 6px rgba(0, 247, 255, 0.2);
-
-                animation: ai-badge-glow 2.5s ease-in-out infinite alternate;
-            }
-
-            @keyframes ai-badge-glow {
-                0% {
-                    box-shadow: 0 0 6px rgba(0, 247, 255, 0.3),
-                    0 0 12px rgba(123, 97, 255, 0.2),
-                    inset 0 0 4px rgba(0, 247, 255, 0.15);
-                }
-                100% {
-                    box-shadow: 0 0 14px rgba(0, 247, 255, 0.6),
-                    0 0 26px rgba(123, 97, 255, 0.35),
-                    inset 0 0 10px rgba(0, 247, 255, 0.25);
-                }
-            }
-
-            .tier-badge {
-                position: relative;
-                width: 19px;
-                height: 19px;
-                flex-shrink: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                overflow: hidden;
-                border-radius: 6px;
-                transition: transform .15s ease;
-            }
-
-            .tier-badge:hover {
-                transform: scale(1.14);
-            }
-
-            .tier-badge svg {
-                width: 100%;
-                height: 100%;
-                display: block;
-            }
-
-            .tier-badge.none {
-                background: var(--danger-soft);
-                color: var(--danger);
-                border-radius: 50%;
-            }
-
-            .tier-badge.none svg {
-                width: 11px;
-                height: 11px;
-                margin: auto;
-            }
-
-            .tier-badge.basic {
-                background: var(--success-soft);
-                color: var(--success);
-                border-radius: 50%;
-            }
-
-            .tier-badge.basic svg {
-                width: 11px;
-                height: 11px;
-                margin: auto;
-            }
-
-            .tier-badge.standard svg {
-                filter: drop-shadow(0 1px 2px rgba(30, 79, 216, .4));
-            }
-
-            .tier-badge.premium {
-                animation: tier-pulse 2.6s ease-in-out infinite;
-            }
-
-            .tier-badge.premium svg {
-                filter: drop-shadow(0 1px 2px rgba(255, 106, 61, .45));
-            }
-
-            .tier-shine {
-                position: absolute;
-                inset: 0;
-                pointer-events: none;
-                background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, .85) 48%, rgba(255, 255, 255, .85) 52%, transparent 70%);
-                transform: translateX(-140%);
-                animation: tier-sweep 3.2s ease-in-out infinite;
-                mix-blend-mode: overlay;
-            }
-
-            @keyframes tier-sweep {
-                0% {
-                    transform: translateX(-140%);
-                }
-                35% {
-                    transform: translateX(140%);
-                }
-                100% {
-                    transform: translateX(140%);
-                }
-            }
-
-            @keyframes tier-pulse {
-                0%, 100% {
-                    filter: drop-shadow(0 0 0 rgba(255, 154, 61, 0));
-                }
-                50% {
-                    filter: drop-shadow(0 0 6px rgba(255, 154, 61, .55));
-                }
-            }
-
-            @keyframes badge-pulse {
-                0%, 100% {
-                    box-shadow: 0 0 0 rgba(255, 106, 61, 0);
-                }
-                50% {
-                    box-shadow: 0 0 6px rgba(255, 106, 61, .6);
-                }
             }
 
             .stat-mini {
@@ -314,6 +184,17 @@
                 background: var(--accent-soft);
             }
 
+            .side-nav .admin-link.is-active {
+                background: var(--accent-soft);
+                color: var(--accent-dark);
+            }
+
+            .side-divider {
+                height: 1px;
+                background: var(--border);
+                margin: 10px 2px;
+            }
+
             .panel {
                 display: none;
             }
@@ -338,7 +219,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: baseline;
-                margin-bottom: 22px;
+                margin-bottom: 6px;
             }
 
             .panel-head h2 {
@@ -347,12 +228,9 @@
                 margin: 0;
             }
 
-            .road-rule {
-                height: 3px;
-                background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
-                border-radius: 2px;
+            .panel-head .road-rule {
                 width: 60px;
-                margin: 8px 0 0;
+                margin: 8px 0 22px;
             }
 
             .panel-head .count {
@@ -363,7 +241,7 @@
 
             .my-grid {
                 display: grid;
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns:repeat(3, 1fr);
                 gap: 16px;
             }
 
@@ -462,12 +340,12 @@
                 border-radius: var(--radius);
                 box-shadow: var(--shadow);
                 padding: 28px;
-                max-width: 100%;
+                max-width: 720px;
             }
 
             .form-grid {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns:1fr 1fr;
                 gap: 16px;
             }
 
@@ -529,56 +407,6 @@
                 margin-bottom: 8px;
             }
 
-            .map-container {
-                margin: 16px 0;
-                border-radius: 12px;
-                overflow: hidden;
-                border: 1px solid var(--border);
-                height: 300px;
-            }
-
-            #profile-map {
-                width: 100%;
-                height: 100%;
-            }
-
-            .location-info {
-                background: var(--primary-soft);
-                border-radius: 10px;
-                padding: 12px 14px;
-                font-size: 12.5px;
-                color: var(--primary-dark);
-                margin-top: 10px;
-            }
-
-            .location-info b {
-                display: block;
-                margin-bottom: 4px;
-            }
-
-            .btn {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px;
-                border-radius: 10px;
-                font-weight: 700;
-                font-size: 14px;
-                padding: 10px 18px;
-                border: 1px solid transparent;
-                transition: all .15s ease;
-            }
-
-            .btn-primary {
-                background: var(--accent);
-                color: #fff;
-                box-shadow: 0 6px 16px -6px rgba(255, 106, 61, .55);
-            }
-
-            .btn-primary:hover {
-                background: var(--accent-dark);
-            }
-
             .settings-row {
                 display: flex;
                 justify-content: space-between;
@@ -631,6 +459,447 @@
 
             .toggle.on::after {
                 left: 21px;
+            }
+
+            .admin-card {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+                box-shadow: var(--shadow);
+                display: grid;
+                grid-template-columns: 140px 1fr auto;
+                gap: 16px;
+                align-items: center;
+                padding: 14px;
+                margin-bottom: 14px;
+            }
+
+            .admin-card .media {
+                width: 140px;
+                aspect-ratio: 4/3;
+                border-radius: 10px;
+                overflow: hidden;
+                background: var(--bg-soft-2);
+            }
+
+            .admin-card .media img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .admin-card .info .price {
+                font-weight: 800;
+                color: var(--primary-dark);
+                font-size: 15.5px;
+                margin-bottom: 3px;
+            }
+
+            .admin-card .info .title {
+                font-size: 14px;
+                font-weight: 700;
+                margin: 0 0 6px;
+            }
+
+            .admin-card .info .meta {
+                font-size: 12.5px;
+                color: var(--text-faint);
+            }
+
+            .admin-card .info .meta b {
+                color: var(--text-mute);
+            }
+
+            .admin-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 150px;
+            }
+
+            .admin-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                padding: 9px 14px;
+                border-radius: 9px;
+                font-size: 13px;
+                font-weight: 700;
+                border: 1px solid transparent;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .admin-btn.approve {
+                background: var(--success-soft);
+                color: var(--success);
+                border-color: #CDEFDA;
+            }
+
+            .admin-btn.approve:hover {
+                background: var(--success);
+                color: #fff;
+            }
+
+            .admin-btn.reject {
+                background: var(--danger-soft);
+                color: var(--danger);
+                border-color: #FBD5D5;
+            }
+
+            .admin-btn.reject:hover {
+                background: var(--danger);
+                color: #fff;
+            }
+
+            .empty-admin {
+                text-align: center;
+                padding: 50px 20px;
+                color: var(--text-faint);
+                font-size: 14px;
+            }
+
+            .vm-overlay {
+                position: fixed;
+                inset: 0;
+                z-index: 9998;
+                background: rgba(18, 21, 28, .55);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                backdrop-filter: blur(2px);
+            }
+
+            .vm-overlay.is-open {
+                display: flex;
+                animation: vm-fade .18s ease;
+            }
+
+            @keyframes vm-fade {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .vm-modal {
+                background: #fff;
+                width: 100%;
+                max-width: 420px;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 24px 60px -12px rgba(18, 21, 28, .35);
+                animation: vm-pop .28s cubic-bezier(.2, 1.2, .4, 1);
+                max-height: 88vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            @keyframes vm-pop {
+                from {
+                    opacity: 0;
+                    transform: scale(.92) translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            .vm-head {
+                position: relative;
+                padding: 38px 28px 26px;
+                text-align: center;
+                background: linear-gradient(160deg, #EAF0FE 0%, #FFF0E9 100%);
+                flex-shrink: 0;
+            }
+
+            .vm-close {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(255, 255, 255, .7);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #12151C;
+                cursor: pointer;
+            }
+
+            .vm-close:hover {
+                background: #fff;
+            }
+
+            .vm-badge-icon {
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 16px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #1E4FD8, #153AA6);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                box-shadow: 0 10px 26px -8px rgba(30, 79, 216, .5);
+            }
+
+            .vm-head h2 {
+                font-family: 'Manrope', sans-serif;
+                font-size: 19px;
+                font-weight: 800;
+                color: #12151C;
+                margin: 0 0 8px;
+                line-height: 1.35;
+            }
+
+            .vm-head p {
+                font-family: 'Inter', sans-serif;
+                font-size: 13.5px;
+                color: #6B7280;
+                margin: 0 auto;
+                line-height: 1.55;
+                max-width: 300px;
+            }
+
+            .vm-body {
+                padding: 10px 20px 24px;
+                overflow-y: auto;
+            }
+
+            .vm-cols {
+                display: grid;
+                grid-template-columns:1fr 92px 92px;
+                gap: 4px;
+                padding: 14px 8px 10px;
+                font-family: 'Manrope', sans-serif;
+                font-size: 11.5px;
+                font-weight: 700;
+                color: #9AA1AC;
+                text-transform: uppercase;
+                letter-spacing: .02em;
+            }
+
+            .vm-cols span:nth-child(2) {
+                text-align: center;
+            }
+
+            .vm-cols span:nth-child(3) {
+                text-align: center;
+                color: #1E4FD8;
+            }
+
+            .vm-row {
+                display: grid;
+                grid-template-columns:1fr 92px 92px;
+                align-items: center;
+                gap: 4px;
+                padding: 13px 8px;
+                border-top: 1px solid #E7E9EE;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .vm-row .label {
+                font-size: 13.5px;
+                font-weight: 600;
+                color: #12151C;
+            }
+
+            .vm-row .sub {
+                display: block;
+                font-size: 11.5px;
+                color: #9AA1AC;
+                font-weight: 400;
+                margin-top: 1px;
+            }
+
+            .vm-row .val {
+                text-align: center;
+                font-size: 13px;
+                font-weight: 700;
+            }
+
+            .vm-row .val.off {
+                color: #9AA1AC;
+                font-weight: 500;
+            }
+
+            .vm-row .val.on {
+                color: #16A34A;
+            }
+
+            .vm-row .val svg {
+                vertical-align: -2px;
+            }
+
+            .vm-note {
+                margin-top: 18px;
+                background: #F6F7FA;
+                border-radius: 12px;
+                padding: 13px 16px;
+                font-family: 'Inter', sans-serif;
+                font-size: 12.5px;
+                color: #6B7280;
+                line-height: 1.6;
+            }
+
+            .vm-note b {
+                color: #12151C;
+            }
+
+            .vm-footer {
+                padding: 0 20px 22px;
+            }
+
+            .vm-cta {
+                width: 100%;
+                padding: 13px 0;
+                border-radius: 11px;
+                border: none;
+                cursor: pointer;
+                background: #FF6A3D;
+                color: #fff;
+                font-family: 'Manrope', sans-serif;
+                font-weight: 700;
+                font-size: 14.5px;
+                box-shadow: 0 8px 20px -8px rgba(255, 106, 61, .55);
+            }
+
+            .vm-cta:hover {
+                background: #E5541F;
+            }
+
+            /* ---------- Tier badge: bitta joy, tarifga qarab bitta belgi ---------- */
+            .tier-badge {
+                position: relative;
+                width: 19px;
+                height: 19px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                overflow: hidden;
+                border-radius: 6px;
+                transition: transform .15s ease;
+            }
+
+            .tier-badge:hover {
+                transform: scale(1.14);
+            }
+
+            .tier-badge svg {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+
+            .tier-badge.none {
+                background: var(--danger-soft);
+                color: var(--danger);
+                border-radius: 50%;
+            }
+
+            .tier-badge.none svg {
+                width: 11px;
+                height: 11px;
+                margin: auto;
+            }
+
+            .tier-badge.basic {
+                background: var(--success-soft);
+                color: var(--success);
+                border-radius: 50%;
+            }
+
+            .tier-badge.basic svg {
+                width: 11px;
+                height: 11px;
+                margin: auto;
+            }
+
+            .tier-badge.standard svg {
+                filter: drop-shadow(0 1px 2px rgba(30, 79, 216, .4));
+            }
+
+            .tier-badge.premium {
+                animation: tier-pulse 2.6s ease-in-out infinite;
+            }
+
+            .tier-badge.premium svg {
+                filter: drop-shadow(0 1px 2px rgba(255, 106, 61, .45));
+            }
+
+            .tier-shine {
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, .85) 48%, rgba(255, 255, 255, .85) 52%, transparent 70%);
+                transform: translateX(-140%);
+                animation: tier-sweep 3.2s ease-in-out infinite;
+                mix-blend-mode: overlay;
+            }
+
+            @keyframes tier-sweep {
+                0% {
+                    transform: translateX(-140%);
+                }
+                35% {
+                    transform: translateX(140%);
+                }
+                100% {
+                    transform: translateX(140%);
+                }
+            }
+
+            @keyframes tier-pulse {
+                0%, 100% {
+                    filter: drop-shadow(0 0 0 rgba(255, 154, 61, 0));
+                }
+                50% {
+                    filter: drop-shadow(0 0 6px rgba(255, 154, 61, .55));
+                }
+            }
+
+            @media (max-width: 900px) {
+                .layout {
+                    grid-template-columns:1fr;
+                }
+
+                nav.nav {
+                    display: none;
+                }
+
+                .my-grid {
+                    grid-template-columns:1fr 1fr;
+                }
+
+                .form-grid {
+                    grid-template-columns:1fr;
+                }
+
+                .admin-card {
+                    grid-template-columns: 100px 1fr;
+                }
+
+                .admin-actions {
+                    grid-column: 1 / -1;
+                    flex-direction: row;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .my-grid {
+                    grid-template-columns:1fr;
+                }
             }
 
             .balance-box {
@@ -690,33 +959,14 @@
             .balance-topup:hover {
                 background: var(--primary-dark);
             }
-
-            @media (max-width: 900px) {
-                .layout {
-                    grid-template-columns: 1fr;
-                }
-
-                .my-grid {
-                    grid-template-columns: 1fr 1fr;
-                }
-
-                .form-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-
-            @media (max-width: 560px) {
-                .my-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
         </style>
     </head>
     <body>
     {% include 'Error.html' %}
 
+
     <div class="layout">
-        <!-- SIDEBAR -->
+
         <aside class="side-card">
             <div class="avatar">{{ request.user.full_name|slice:":2"|upper }}</div>
 
@@ -724,8 +974,8 @@
                 <h3>{{ request.user.full_name }}</h3>
 
                 {% if request.user.active_plan.code == 'premium' %}
-                    <span class="tier-badge premium" title="Premium — Tasdiqlangan va ishonchli"
-                          onclick="openVerifyModal()">
+                    <span class="tier-badge premium" onclick="openVerifyModal()"
+                          title="Premium — Tasdiqlangan va ishonchli">
                         <svg viewBox="0 0 24 24" fill="url(#grad-premium)">
                             <defs><linearGradient id="grad-premium" x1="0" y1="0" x2="1" y2="1">
                                 <stop offset="0%" stop-color="#FFD874"/><stop offset="55%" stop-color="#FF9A3D"/><stop
@@ -737,8 +987,8 @@
                     </span>
 
                 {% elif request.user.active_plan.code == 'standard' %}
-                    <span class="tier-badge standard" title="O'rta — Tasdiqlangan va ishonchli"
-                          onclick="openVerifyModal()">
+                    <span class="tier-badge standard" onclick="openVerifyModal()"
+                          title="O'rta — Tasdiqlangan va ishonchli">
                         <svg viewBox="0 0 24 24" fill="url(#grad-standard)">
                             <defs><linearGradient id="grad-standard" x1="0" y1="0" x2="1" y2="1">
                                 <stop offset="0%" stop-color="#8FB1FF"/><stop offset="55%" stop-color="#3B6FE8"/><stop
@@ -751,14 +1001,14 @@
                     </span>
 
                 {% elif request.user.is_verified %}
-                    <span class="tier-badge basic" title="Tasdiqlangan va ishonchli" onclick="openVerifyModal()">
+                    <span class="tier-badge basic" onclick="openVerifyModal()" title="Tasdiqlangan va ishonchli">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                             <path d="M20 6 9 17l-5-5"/>
                         </svg>
                     </span>
 
                 {% else %}
-                    <span class="tier-badge none" title="Tasdiqlanmagan" onclick="openVerifyModal()">
+                    <span class="tier-badge none" onclick="openVerifyModal()" title="Tasdiqlanmagan">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                             <path d="M18 6 6 18M6 6l12 12"/>
                         </svg>
@@ -770,9 +1020,6 @@
 
             {% if request.user.role == 'admin' %}
                 <span class="role-badge admin">Administrator</span>
-            {% elif  request.user.role == 'gemini' %}
-                <span class="role-badge gemini">Gemini (FRIEND)</span>
-
             {% else %}
                 <span class="role-badge user">Foydalanuvchi</span>
             {% endif %}
@@ -780,13 +1027,12 @@
             <div class="stat-mini">
                 <div><b>{{ post_count }}</b><span>e'lon</span></div>
                 <div><b>4.9</b><span>reyting</span></div>
-                <div><b>{{ post_view_count|default:0 }}</b><span>ko'rish</span></div>
+                <div><b>{{ post_view_count }}</b><span>ko'rish</span></div>
             </div>
-
             <div class="balance-box">
                 <div class="balance-info">
                     <span class="balance-label">Balans</span>
-                    <span class="balance-amount">{{ request.user.balance|floatformat:0|intcomma }} <small>so'm</small></span>
+                    <span class="balance-amount">{{ request.user.balance }} <small>so'm</small></span>
                 </div>
                 <a href="{% url 'payment' %}" class="balance-topup">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -796,7 +1042,6 @@
                     To'ldirish
                 </a>
             </div>
-
             <ul class="side-nav">
                 <li>
                     <button class="is-active" onclick="showPanel('listings', this)">
@@ -831,7 +1076,7 @@
                 </li>
 
                 {% if request.user.role == 'admin' %}
-                    <li style="height: 1px; background: var(--border); margin: 10px 2px;"></li>
+                    <li class="side-divider"></li>
                     <li>
                         <button class="admin-link" onclick="showPanel('admin', this)">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -840,17 +1085,17 @@
                                 <path d="M9 12l2 2 4-4"/>
                             </svg>
                             Admin panel
-                            {% if pending_posts|length %}
-                                <span style="margin-left:auto;background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;">{{ pending_posts|length }}</span>
+                            {% if pending_count %}
+                                <span style="margin-left:auto;background:var(--accent);color:#fff;font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;">{{ pending_count }}</span>
                             {% endif %}
                         </button>
                     </li>
                 {% endif %}
 
                 <li>
-                    <form method="post" action="{% url 'logout' %}" style="width: 100%;">
+                    <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
-                        <button type="submit" class="danger" style="width: 100%;">
+                        <button type="submit" class="danger" onclick="location.href='home.html'">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                  stroke-width="2">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -864,58 +1109,54 @@
             </ul>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main>
 
             <!-- Panel: Mening e'lonlarim -->
             <section id="panel-listings" class="panel is-active">
                 <div class="panel-head">
-                    <div>
-                        <h2>Mening e'lonlarim</h2>
+                    <div><h2>Mening e'lonlarim</h2>
                         <div class="road-rule"></div>
                     </div>
-                    <span class="count">{{ post_count }} ta e'lon</span>
+                    <span class="count">12 ta e'lon</span>
                 </div>
                 <div class="my-grid">
-                    {% for post in posts %}
+                    {% for i in posts %}
                         <div class="my-card">
                             <div class="media">
-                                {% if post.status == 'active' %}
-                                    <span class="status-tag active">Faol</span>
-                                {% elif post.status == 'pending' %}
-                                    <span class="status-tag pending">Ko'rib chiqilmoqda</span>
-                                {% elif post.status == 'sold' %}
+                                {% if i.status == 'active' %}
+                                    <span class="status-tag active"
+                                          style="background-color: var(--success);">Faol</span>
+                                {% elif i.status == 'pending' %}
+                                    <span class="status-tag pending" style="background-color: #D97706;">Ko'rib chiqilmoqda</span>
+                                {% elif i.status == 'sold' %}
                                     <span class="status-tag" style="background-color: var(--text-mute);">Sotilgan</span>
-                                {% elif post.status == 'rejected' %}
+                                {% elif i.status == 'rejected' %}
                                     <span class="status-tag" style="background-color: var(--danger);">Rad etilgan</span>
                                 {% endif %}
-                                <img src="{{ post.images.first.image.url }}" alt="{{ post.title }}">
+                                <img src="{{ i.images.first.image.url }}">
                             </div>
                             <div class="body">
-                                <div class="price">{{ post.price|floatformat:0 }} {{ post.get_currency_display }}</div>
-                                <p class="title">{{ post.title }}</p>
-                                {% if post.status == 'rejected' and post.reject_reason %}
+                                <div class="price">{{ i.price }} {{ i.currency }}</div>
+                                <p class="title">{{ i.title }}</p>
+                                {% if i.status == 'rejected' and i.reject_reason %}
                                     <p style="font-size:12px;color:var(--danger);margin:0 0 10px;">
-                                        Sabab: {{ post.reject_reason }}</p>
+                                        Sabab: {{ i.reject_reason }}</p>
                                 {% endif %}
                                 <div class="actions">
-                                    <a href="{% url 'detail' post.id %}" class="icon-sm">✎ Ko'rish</a>
-                                    <button class="icon-sm del" onclick="deletePost({{ post.id }})">🗑 O'chirish</button>
+                                    <button class="icon-sm">✎ Tahrirlash</button>
+                                    <button class="icon-sm del">🗑</button>
                                 </div>
                             </div>
                         </div>
-                    {% empty %}
-                        <p style="grid-column: 1 / -1; text-align: center; color: var(--text-faint); padding: 40px;">
-                            Hozircha e'lonlar yo'q</p>
                     {% endfor %}
+
                 </div>
             </section>
 
             <!-- Panel: Yangi e'lon joylash -->
             <section id="panel-new" class="panel">
                 <div class="panel-head">
-                    <div>
-                        <h2>Yangi e'lon joylash</h2>
+                    <div><h2>Yangi e'lon joylash</h2>
                         <div class="road-rule"></div>
                     </div>
                 </div>
@@ -923,23 +1164,21 @@
                     <form action="{% url 'create-post' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="field full">
-                            <label>E'lon sarlavhasi *</label>
-                            <input type="text" name="title" placeholder="Masalan: Chevrolet Cobalt, 2021 yil" required>
+                            <label>E'lon sarlavhasi</label>
+                            <input type="text" name="title" placeholder="Masalan: Chevrolet Cobalt, 2021 yil">
                         </div>
                         <div class="form-grid">
                             <div class="field">
-                                <label>Kategoriya *</label>
-                                <select name="category" required>
-                                    <option value="">Tanlang...</option>
-                                    {% for cat in categories %}
-                                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                <label>Kategoriya</label>
+                                <select name="category">
+                                    {% for i in categories %}
+                                        <option value="{{ i.id }}">{{ i.name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="field">
-                                <label>Joylashuv (Shahar) *</label>
-                                <select name="city" required>
-                                    <option value="">Tanlang...</option>
+                                <label>Joylashuv</label>
+                                <select name="city">
                                     <option value="Toshkent shahri">Toshkent shahri</option>
                                     <option value="Toshkent viloyati">Toshkent viloyati</option>
                                     <option value="Andijon">Andijon viloyati</option>
@@ -957,41 +1196,27 @@
                                 </select>
                             </div>
                             <div class="field">
-                                <label>Narx *</label>
-                                <input type="number" name="price" placeholder="Masalan: 148500000" required>
+                                <label>Narx</label>
+                                <input type="text" name="price" placeholder="Masalan: 148500000"
+                                       oninput="this.value = this.value.replace(/\s/g, '')">
                             </div>
                             <div class="field">
-                                <label>Valyuta *</label>
-                                <select name="currency" required>
+                                <label>Valyuta</label>
+                                <select name="currency">
                                     <option value="uzs">UZS (so'm)</option>
                                     <option value="usd">USD ($)</option>
                                 </select>
                             </div>
                         </div>
-
                         <div class="field full">
-                            <label>Tavsif *</label>
-                            <textarea name="desc" placeholder="Mahsulot haqida batafsil yozing..." required></textarea>
+                            <label>Tavsif</label>
+                            <textarea name="desc"
+                                      placeholder="Mahsulot yoki xizmat haqida batafsil yozing..."></textarea>
                         </div>
-
-                        <!-- MAP FOR LOCATION -->
                         <div class="field full">
-                            <label>Joylashuvni haritada belgilang</label>
-                            <div class="map-container">
-                                <div id="profile-map"></div>
-                            </div>
-                            <div class="location-info">
-                                <b>Tanlangan joylashuv:</b>
-                                <span id="location-display">Haritada joyni bosing</span>
-                            </div>
-                            <input type="hidden" name="latitude" id="latitude">
-                            <input type="hidden" name="longitude" id="longitude">
-                        </div>
-
-                        <div class="field full">
-                            <label>Rasmlar *</label>
+                            <label>Rasmlar</label>
                             <input type="file" name="images" id="real-file-input" multiple accept="image/*"
-                                   style="display: none;" onchange="updateUploadBox(this)" required>
+                                   style="display: none;" onchange="updateUploadBox(this)">
                             <div class="upload-box" id="custom-upload-box"
                                  onclick="document.getElementById('real-file-input').click()">
                                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1003,20 +1228,16 @@
                                 <div id="upload-text">Rasmlarni shu yerga tashlang yoki tanlash uchun bosing</div>
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary"
-                                style="width:100%;justify-content:center;padding:13px 0;">
-                            E'lonni joylash
+                                style="width:100%;justify-content:center;padding:13px 0;">E'lonni joylash
                         </button>
                     </form>
                 </div>
             </section>
 
-            <!-- Panel: Profil sozlamalari -->
             <section id="panel-settings" class="panel">
                 <div class="panel-head">
-                    <div>
-                        <h2>Profil sozlamalari</h2>
+                    <div><h2>Profil sozlamalari</h2>
                         <div class="road-rule"></div>
                     </div>
                 </div>
@@ -1024,28 +1245,27 @@
                     <div class="form-grid">
                         <div class="field">
                             <label>Ism</label>
-                            <input type="text" value="{{ request.user.first_name }}" disabled>
+                            <input type="text" value="Hojimurod">
                         </div>
                         <div class="field">
                             <label>Familiya</label>
-                            <input type="text" value="{{ request.user.last_name }}" disabled>
+                            <input type="text" value="B.">
                         </div>
                         <div class="field">
                             <label>Telefon raqam</label>
-                            <input type="text" value="+{{ request.user.phone_number }}" disabled>
+                            <input type="text" value="+998 90 123 45 67">
                         </div>
                         <div class="field">
                             <label>Email</label>
-                            <input type="email" placeholder="email@example.com" disabled>
+                            <input type="text" placeholder="email@example.com">
                         </div>
                     </div>
-                    <button class="btn btn-primary" style="margin-bottom:8px;" disabled>O'zgarishlarni saqlash</button>
+                    <button class="btn btn-primary" style="margin-bottom:8px;">O'zgarishlarni saqlash</button>
 
                     <div style="margin-top:26px;">
                         <div class="settings-row">
                             <div class="label">
-                                <b>Bildirishnomalar</b><span>Yangi xabar va takliflar haqida email olish</span>
-                            </div>
+                                <b>Bildirishnomalar</b><span>Yangi xabar va takliflar haqida email olish</span></div>
                             <button class="toggle on" onclick="this.classList.toggle('on')"></button>
                         </div>
                         <div class="settings-row">
@@ -1062,35 +1282,31 @@
                 </div>
             </section>
 
-            <!-- Panel: Admin -->
+            <!-- Panel: Admin — barcha ko'rib chiqilmagan e'lonlar -->
             {% if request.user.role == 'admin' %}
                 <section id="panel-admin" class="panel">
                     <div class="panel-head">
-                        <div>
-                            <h2>Admin panel — ko'rib chiqilmoqda</h2>
+                        <div><h2>Admin panel — ko'rib chiqilmoqda</h2>
                             <div class="road-rule"></div>
                         </div>
                         <span class="count">{{ pending_posts|length }} ta e'lon</span>
                     </div>
 
-                    {% for post in pending_posts %}
-                        <div style="background: #fff; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; align-items: center; padding: 14px; margin-bottom: 14px;">
-                            <div style="width: 140px; aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; background: var(--bg-soft-2);">
-                                <img src="{{ post.images.first.image.url }}"
-                                     style="width: 100%; height: 100%; object-fit: cover;">
+                    {% for i in pending_posts %}
+                        <div class="admin-card">
+                            <div class="media">
+                                <img src="{{ i.images.first.image.url }}">
                             </div>
-                            <div>
-                                <div style="font-weight: 800; color: var(--primary-dark); font-size: 15.5px; margin-bottom: 3px;">{{ post.price|floatformat:0 }} {{ post.get_currency_display }}</div>
-                                <p style="font-size: 14px; font-weight: 700; margin: 0 0 6px;">{{ post.title }}</p>
-                                <div style="font-size: 12.5px; color: var(--text-faint);"><b
-                                        style="color: var(--text-mute);">{{ post.user.full_name }}</b> · {{ post.city }}
-                                    · {{ post.created_at|date:"d.m.Y" }}</div>
+                            <div class="info">
+                                <div class="price">{{ i.price }} {{ i.currency }}</div>
+                                <p class="title">{{ i.title }}</p>
+                                <div class="meta"><b>{{ i.user.full_name }}</b> · {{ i.city }} · {{ i.created_at }}
+                                </div>
                             </div>
-                            <div style="display: flex; flex-direction: column; gap: 8px; min-width: 150px;">
-                                <form method="post" action="{% url 'approve-post' post.id %}">
+                            <div class="admin-actions">
+                                <form method="post" action="{% url 'approve-post' i.id %}">
                                     {% csrf_token %}
-                                    <button type="submit"
-                                            style="display: flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 14px; border-radius: 9px; font-size: 13px; font-weight: 700; border: 1px solid #CDEFDA; cursor: pointer; width: 100%; background: var(--success-soft); color: var(--success);">
+                                    <button type="submit" class="admin-btn approve">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="3">
                                             <path d="M20 6 9 17l-5-5"/>
@@ -1098,10 +1314,9 @@
                                         Qoyilsin
                                     </button>
                                 </form>
-                                <form method="post" action="{% url 'rejected-post' post.id %}">
+                                <form method="post" action="{% url 'rejected-post' i.id %}">
                                     {% csrf_token %}
-                                    <button type="submit"
-                                            style="display: flex; align-items: center; justify-content: center; gap: 7px; padding: 9px 14px; border-radius: 9px; font-size: 13px; font-weight: 700; border: 1px solid #FBD5D5; cursor: pointer; width: 100%; background: var(--danger-soft); color: var(--danger);">
+                                    <button type="submit" class="admin-btn reject">
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                                              stroke="currentColor" stroke-width="2.6">
                                             <circle cx="12" cy="12" r="9"/>
@@ -1113,9 +1328,7 @@
                             </div>
                         </div>
                     {% empty %}
-                        <div style="text-align: center; padding: 50px 20px; color: var(--text-faint); font-size: 14px;">
-                            Hozircha ko'rib chiqilishi kerak bo'lgan e'lonlar yo'q.
-                        </div>
+                        <div class="empty-admin">Hozircha ko'rib chiqilishi kerak bo'lgan e'lonlar yo'q.</div>
                     {% endfor %}
                 </section>
             {% endif %}
@@ -1123,9 +1336,10 @@
         </main>
     </div>
 
-    <!-- VERIFY MODAL -->
+{#    PREMIUM#}
     <div class="vm-overlay" id="verify-modal-overlay">
         <div class="vm-modal">
+
             <div class="vm-head">
                 <button class="vm-close" onclick="closeVerifyModal()">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1212,267 +1426,25 @@
                     <button class="vm-cta">Tasdiqlash uchun so'rov yuborish</button>
                 </form>
             </div>
+
         </div>
     </div>
-
-    <style>
-        .vm-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9998;
-            background: rgba(18, 21, 28, .55);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(2px);
-        }
-
-        .vm-overlay.is-open {
-            display: flex;
-            animation: vm-fade .18s ease;
-        }
-
-        @keyframes vm-fade {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .vm-modal {
-            background: #fff;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 24px 60px -12px rgba(18, 21, 28, .35);
-            animation: vm-pop .28s cubic-bezier(.2, 1.2, .4, 1);
-            max-height: 88vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @keyframes vm-pop {
-            from {
-                opacity: 0;
-                transform: scale(.92) translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .vm-head {
-            position: relative;
-            padding: 38px 28px 26px;
-            text-align: center;
-            background: linear-gradient(160deg, #EAF0FE 0%, #FFF0E9 100%);
-            flex-shrink: 0;
-        }
-
-        .vm-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, .7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #12151C;
-            cursor: pointer;
-        }
-
-        .vm-close:hover {
-            background: #fff;
-        }
-
-        .vm-badge-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 16px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #1E4FD8, #153AA6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            box-shadow: 0 10px 26px -8px rgba(30, 79, 216, .5);
-        }
-
-        .vm-head h2 {
-            font-family: 'Manrope', sans-serif;
-            font-size: 19px;
-            font-weight: 800;
-            color: #12151C;
-            margin: 0 0 8px;
-            line-height: 1.35;
-        }
-
-        .vm-head p {
-            font-family: 'Inter', sans-serif;
-            font-size: 13.5px;
-            color: #6B7280;
-            margin: 0 auto;
-            line-height: 1.55;
-            max-width: 300px;
-        }
-
-        .vm-body {
-            padding: 10px 20px 24px;
-            overflow-y: auto;
-        }
-
-        .vm-cols {
-            display: grid;
-            grid-template-columns: 1fr 92px 92px;
-            gap: 4px;
-            padding: 14px 8px 10px;
-            font-family: 'Manrope', sans-serif;
-            font-size: 11.5px;
-            font-weight: 700;
-            color: #9AA1AC;
-            text-transform: uppercase;
-            letter-spacing: .02em;
-        }
-
-        .vm-cols span:nth-child(2) {
-            text-align: center;
-        }
-
-        .vm-cols span:nth-child(3) {
-            text-align: center;
-            color: #1E4FD8;
-        }
-
-        .vm-row {
-            display: grid;
-            grid-template-columns: 1fr 92px 92px;
-            align-items: center;
-            gap: 4px;
-            padding: 13px 8px;
-            border-top: 1px solid #E7E9EE;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .vm-row .label {
-            font-size: 13.5px;
-            font-weight: 600;
-            color: #12151C;
-        }
-
-        .vm-row .sub {
-            display: block;
-            font-size: 11.5px;
-            color: #9AA1AC;
-            font-weight: 400;
-            margin-top: 1px;
-        }
-
-        .vm-row .val {
-            text-align: center;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .vm-row .val.off {
-            color: #9AA1AC;
-            font-weight: 500;
-        }
-
-        .vm-row .val.on {
-            color: #16A34A;
-        }
-
-        .vm-row .val svg {
-            vertical-align: -2px;
-        }
-
-        .vm-note {
-            margin-top: 18px;
-            background: #F6F7FA;
-            border-radius: 12px;
-            padding: 13px 16px;
-            font-family: 'Inter', sans-serif;
-            font-size: 12.5px;
-            color: #6B7280;
-            line-height: 1.6;
-        }
-
-        .vm-note b {
-            color: #12151C;
-        }
-
-        .vm-footer {
-            padding: 0 20px 22px;
-        }
-
-        .vm-cta {
-            width: 100%;
-            padding: 13px 0;
-            border-radius: 11px;
-            border: none;
-            cursor: pointer;
-            background: #FF6A3D;
-            color: #fff;
-            font-family: 'Manrope', sans-serif;
-            font-weight: 700;
-            font-size: 14.5px;
-            box-shadow: 0 8px 20px -8px rgba(255, 106, 61, .55);
-        }
-
-        .vm-cta:hover {
-            background: #E5541F;
-        }
-    </style>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        let profileMap;
-        let selectedLat, selectedLng;
+        function openVerifyModal() {
+            document.getElementById('verify-modal-overlay').classList.add('is-open');
+        }
 
-        // Initialize map
-        document.addEventListener('DOMContentLoaded', function () {
-            if (document.getElementById('profile-map')) {
-                profileMap = L.map('profile-map').setView([41.2995, 69.2401], 13); // Tashkent center
+        function closeVerifyModal() {
+            document.getElementById('verify-modal-overlay').classList.remove('is-open');
+        }
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap',
-                    maxZoom: 19
-                }).addTo(profileMap);
-
-                profileMap.on('click', function (e) {
-                    selectedLat = e.latlng.lat;
-                    selectedLng = e.latlng.lng;
-
-                    document.getElementById('latitude').value = selectedLat;
-                    document.getElementById('longitude').value = selectedLng;
-                    document.getElementById('location-display').textContent = `${selectedLat.toFixed(4)}, ${selectedLng.toFixed(4)}`;
-
-                    // Remove old marker
-                    profileMap.eachLayer(function (layer) {
-                        if (layer instanceof L.Marker) {
-                            profileMap.removeLayer(layer);
-                        }
-                    });
-
-                    // Add new marker
-                    L.marker([selectedLat, selectedLng]).addTo(profileMap)
-                        .bindPopup('Tanlangan joylashuv')
-                        .openPopup();
-                });
-            }
+        document.getElementById('verify-modal-overlay').addEventListener('click', function (e) {
+            if (e.target === this) closeVerifyModal();
         });
 
         function showPanel(name, btn) {
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('is-active'));
+
             const targetPanel = document.getElementById('panel-' + name);
             if (targetPanel) {
                 targetPanel.classList.add('is-active');
@@ -1481,11 +1453,6 @@
             document.querySelectorAll('.side-nav button').forEach(b => b.classList.remove('is-active'));
             if (btn) {
                 btn.classList.add('is-active');
-            }
-
-            // Redraw map when panel is shown
-            if (name === 'new' && profileMap) {
-                setTimeout(() => profileMap.invalidateSize(), 300);
             }
         }
 
@@ -1500,27 +1467,24 @@
             }
         }
 
-        function deletePost(postId) {
-            if (confirm('Ushbu e\'lonni o\'chirishga ishonchingiz komilmi?')) {
-                // Implement delete with AJAX or form submission
-                console.log('Delete post:', postId);
-            }
-        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const panelName = hash.replace('#panel-', '');
 
-        function openVerifyModal() {
-            document.getElementById('verify-modal-overlay').classList.add('is-open');
-        }
+                const sidebarButtons = document.querySelectorAll('.side-nav button');
+                let targetBtn = null;
 
-        function closeVerifyModal() {
-            document.getElementById('verify-modal-overlay').classList.remove('is-open');
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const overlay = document.getElementById('verify-modal-overlay');
-            if (overlay) {
-                overlay.addEventListener('click', function (e) {
-                    if (e.target === this) closeVerifyModal();
+                sidebarButtons.forEach(btn => {
+                    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`'${panelName}'`)) {
+                        targetBtn = btn;
+                    }
                 });
+
+                if (document.getElementById('panel-' + panelName)) {
+                    showPanel(panelName, targetBtn);
+                    document.getElementById('panel-' + panelName).scrollIntoView({behavior: 'smooth'});
+                }
             }
         });
     </script>

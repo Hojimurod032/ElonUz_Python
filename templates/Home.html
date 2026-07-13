@@ -1,965 +1,536 @@
-<!DOCTYPE html>
-<html lang="uz">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoElon — Minglab e'lonlar, bitta manzil</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet">
-    <style>
-        :root {
-            --bg: #ffffff;
-            --bg-soft: #F6F7FA;
-            --bg-soft-2: #F0F2F6;
-            --border: #E7E9EE;
-            --text: #12151C;
-            --text-mute: #6B7280;
-            --text-faint: #9AA1AC;
-            --primary: #1E4FD8;
-            --primary-dark: #153AA6;
-            --primary-soft: #EAF0FE;
-            --accent: #FF6A3D;
-            --accent-dark: #E5541F;
-            --accent-soft: #FFF0E9;
-            --success: #16A34A;
-            --radius: 14px;
-            --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
-            --shadow-lift: 0 12px 32px -8px rgba(18, 21, 28, .18);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        h1, h2, h3, .brand, .nav a, .btn, .chip, .card-title {
-            font-family: 'Manrope', sans-serif;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        button {
-            font: inherit;
-            cursor: pointer;
-        }
-
-        .wrap {
-            max-width: 1180px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* Road-dash signature motif */
-        .road-rule {
-            height: 3px;
-            background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
-            border-radius: 2px;
-        }
-
-        /* ---------- Header ---------- */
-        header.site {
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            background: rgba(255, 255, 255, .92);
-            backdrop-filter: saturate(180%) blur(10px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            height: 74px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            font-weight: 800;
-            font-size: 21px;
-            color: var(--text);
-            flex-shrink: 0;
-        }
-
-        .brand .dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 3px;
-            background: var(--accent);
-            transform: rotate(45deg);
-        }
-
-        nav.nav {
-            display: flex;
-            gap: 22px;
-            flex: 1;
-        }
-
-        nav.nav a {
-            font-weight: 600;
-            font-size: 14.5px;
-            color: var(--text-mute);
-            padding: 8px 2px;
-            position: relative;
-            transition: color .15s;
-        }
-
-        nav.nav a:hover {
-            color: var(--text);
-        }
-
-        nav.nav a.active {
-            color: var(--text);
-        }
-
-        nav.nav a.active::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: -4px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 2px;
-        }
-
-        .top-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 14px;
-            padding: 10px 18px;
-            border: 1px solid transparent;
-            transition: all .15s ease;
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--text);
-            border-color: var(--border);
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-soft);
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 6px 16px -6px rgba(255, 106, 61, .55);
-        }
-
-        .btn-primary:hover {
-            background: var(--accent-dark);
-        }
-
-        .btn-outline {
-            background: #fff;
-            color: var(--primary);
-            border-color: var(--primary-soft);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary-soft);
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            color: var(--text-mute);
-            background: #fff;
-        }
-
-        .icon-btn:hover {
-            color: var(--text);
-            background: var(--bg-soft);
-        }
-
-        /* ---------- Hero ---------- */
-        .hero {
-            padding: 56px 0 40px;
-            background: radial-gradient(720px 260px at 85% -10%, var(--primary-soft), transparent 60%),
-            radial-gradient(600px 220px at 5% 0%, var(--accent-soft), transparent 60%);
-        }
-
-        .hero h1 {
-            font-size: 44px;
-            line-height: 1.12;
-            font-weight: 800;
-            margin: 0 0 14px;
-            max-width: 640px;
-            letter-spacing: -.02em;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 16.5px;
-            color: var(--text-mute);
-            max-width: 520px;
-            margin: 0 0 30px;
-        }
-
-        .search-card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: var(--shadow);
-            padding: 10px;
-            display: flex;
-            gap: 8px;
-            max-width: 760px;
-        }
-
-        .search-card select, .search-card input {
-            border: none;
-            background: transparent;
-            font-family: 'Inter';
-            font-size: 14.5px;
-            color: var(--text);
-            padding: 12px 14px;
-            outline: none;
-        }
-
-        .search-card select {
-            border-right: 1px solid var(--border);
-            flex: 0 0 170px;
-            font-weight: 600;
-        }
-
-        .search-card input {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .search-card .btn-primary {
-            flex: 0 0 auto;
-            padding: 12px 22px;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 34px;
-            margin-top: 26px;
-        }
-
-        .hero-stats div b {
-            font-size: 20px;
-            font-weight: 800;
-            display: block;
-        }
-
-        .hero-stats div span {
-            font-size: 13px;
-            color: var(--text-faint);
-        }
-
-        /* ---------- Category chips ---------- */
-        .cats {
-            padding: 26px 0 10px;
-        }
-
-        .cats-row {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-        }
-
-        .chip {
-            flex: 0 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            border-radius: 999px;
-            border: 1px solid var(--border);
-            background: #fff;
-            font-weight: 600;
-            font-size: 13.5px;
-            color: var(--text);
-            white-space: nowrap;
-            transition: all .15s;
-        }
-
-        .chip:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-soft);
-        }
-
-        .chip.is-active {
-            background: var(--text);
-            color: #fff;
-            border-color: var(--text);
-        }
-
-        /* ---------- Listings ---------- */
-        .section-head {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            margin: 38px 0 18px;
-        }
-
-        .section-head h2 {
-            font-size: 22px;
-            font-weight: 800;
-            margin: 0;
-        }
-
-        .section-head .road-rule {
-            width: 64px;
-            margin-top: 8px;
-        }
-
-        .section-head a {
-            font-size: 13.5px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns:repeat(4, 1fr);
-            gap: 18px;
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: transform .18s ease, box-shadow .18s ease;
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lift);
-        }
-
-        .card-media {
-            position: relative;
-            aspect-ratio: 4/3;
-            overflow: hidden;
-            background: var(--bg-soft-2);
-        }
-
-        .card-media img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--success);
-            color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 9px;
-            border-radius: 6px;
-            letter-spacing: .02em;
-        }
-
-        .badge.premium {
-            background: var(--accent);
-        }
-
-        .fav-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, .9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-mute);
-            transition: color .15s, transform .15s;
-        }
-
-        .fav-btn:hover {
-            color: var(--accent);
-        }
-
-        .fav-btn.is-fav {
-            color: var(--accent);
-        }
-
-        .fav-btn.is-fav svg {
-            fill: var(--accent);
-        }
-
-        .fav-btn:active {
-            transform: scale(.88);
-        }
-
-        .card-body {
-            padding: 14px 14px 16px;
-        }
-
-        .price-tag {
-            display: inline-flex;
-            align-items: center;
-            font-weight: 800;
-            font-size: 17px;
-            color: var(--primary-dark);
-            background: var(--primary-soft);
-            padding: 4px 10px 4px 12px;
-            border-radius: 0 6px 6px 0;
-            position: relative;
-            margin-bottom: 9px;
-        }
-
-        .price-tag::before {
-            content: "";
-            position: absolute;
-            left: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-top: 12px solid transparent;
-            border-bottom: 12px solid transparent;
-            border-right: 6px solid var(--primary-soft);
-        }
-
-        .card-title {
-            font-size: 14.5px;
-            font-weight: 700;
-            margin: 0 0 6px;
-            line-height: 1.35;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            min-height: 38px;
-        }
-
-        .card-meta {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12.5px;
-            color: var(--text-faint);
-        }
-
-        .card-meta svg {
-            flex-shrink: 0;
-        }
-
-        /* ---------- CTA banner ---------- */
-        .banner {
-            margin: 56px 0;
-            border-radius: 20px;
-            padding: 44px 46px;
-            background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .banner::after {
-            content: "";
-            position: absolute;
-            right: -40px;
-            top: -60px;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, .12), transparent 70%);
-        }
-
-        .banner h3 {
-            font-size: 24px;
-            margin: 0 0 6px;
-            font-weight: 800;
-        }
-
-        .banner p {
-            margin: 0;
-            color: rgba(255, 255, 255, .82);
-            font-size: 14.5px;
-            max-width: 420px;
-        }
-
-        .banner .btn {
-            background: #fff;
-            color: var(--primary-dark);
-        }
-
-        .banner .btn:hover {
-            background: var(--accent-soft);
-        }
-
-        /* ---------- Footer ---------- */
-        footer {
-            border-top: 1px solid var(--border);
-            background: var(--bg-soft);
-            margin-top: 20px;
-            padding: 44px 0 26px;
-        }
-
-        .foot-grid {
-            display: grid;
-            grid-template-columns:1.4fr 1fr 1fr 1fr;
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .foot-grid h4 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: .04em;
-            color: var(--text-faint);
-            margin: 0 0 14px;
-        }
-
-        .foot-grid ul li {
-            margin-bottom: 10px;
-        }
-
-        .foot-grid ul a {
-            font-size: 14px;
-            color: var(--text-mute);
-        }
-
-        .foot-grid ul a:hover {
-            color: var(--primary);
-        }
-
-        .foot-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border);
-            padding-top: 20px;
-            font-size: 13px;
-            color: var(--text-faint);
-        }
-
-        @media (max-width: 980px) {
-            .grid {
-                grid-template-columns:repeat(2, 1fr);
+{% extends 'Base.html' %}
+{% load humanize %}
+{% block base %}
+
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AutoElon — Minglab e'lonlar, bitta manzil</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+              rel="stylesheet">
+        <style>
+            :root {
+                --bg: #ffffff;
+                --bg-soft: #F6F7FA;
+                --bg-soft-2: #F0F2F6;
+                --border: #E7E9EE;
+                --text: #12151C;
+                --text-mute: #6B7280;
+                --text-faint: #9AA1AC;
+                --primary: #1E4FD8;
+                --primary-dark: #153AA6;
+                --primary-soft: #EAF0FE;
+                --accent: #FF6A3D;
+                --accent-dark: #E5541F;
+                --accent-soft: #FFF0E9;
+                --success: #16A34A;
+                --radius: 14px;
+                --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
+                --shadow-lift: 0 12px 32px -8px rgba(18, 21, 28, .18);
             }
 
-            nav.nav {
-                display: none;
+            * {
+                box-sizing: border-box;
             }
 
-            .foot-grid {
-                grid-template-columns:1fr 1fr;
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: 'Inter', sans-serif;
+                -webkit-font-smoothing: antialiased;
+            }
+
+
+            /* ---------- Hero ---------- */
+            .hero {
+                padding: 56px 0 40px;
+                background: radial-gradient(720px 260px at 85% -10%, var(--primary-soft), transparent 60%),
+                radial-gradient(600px 220px at 5% 0%, var(--accent-soft), transparent 60%);
             }
 
             .hero h1 {
-                font-size: 32px;
+                font-size: 44px;
+                line-height: 1.12;
+                font-weight: 800;
+                margin: 0 0 14px;
+                max-width: 640px;
+                letter-spacing: -.02em;
             }
-        }
 
-        @media (max-width: 560px) {
-            .grid {
-                grid-template-columns:1fr 1fr;
-                gap: 12px;
+            .hero h1 span {
+                color: var(--primary);
+            }
+
+            .hero p {
+                font-size: 16.5px;
+                color: var(--text-mute);
+                max-width: 520px;
+                margin: 0 0 30px;
             }
 
             .search-card {
-                flex-wrap: wrap;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                box-shadow: var(--shadow);
+                padding: 10px;
+                display: flex;
+                gap: 8px;
+                max-width: 760px;
+            }
+
+            .search-card select, .search-card input {
+                border: none;
+                background: transparent;
+                font-family: 'Inter';
+                font-size: 14.5px;
+                color: var(--text);
+                padding: 12px 14px;
+                outline: none;
             }
 
             .search-card select {
-                flex: 1 1 100%;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+                flex: 0 0 170px;
+                font-weight: 600;
             }
 
+            .search-card input {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .search-card .btn-primary {
+                flex: 0 0 auto;
+                padding: 12px 22px;
+            }
+
+            .hero-stats {
+                display: flex;
+                gap: 34px;
+                margin-top: 26px;
+            }
+
+            .hero-stats div b {
+                font-size: 20px;
+                font-weight: 800;
+                display: block;
+            }
+
+            .hero-stats div span {
+                font-size: 13px;
+                color: var(--text-faint);
+            }
+
+            /* ---------- Category chips ---------- */
+            .cats {
+                padding: 26px 0 10px;
+            }
+
+            .cats-row {
+                display: flex;
+                gap: 10px;
+                overflow-x: auto;
+                padding-bottom: 6px;
+            }
+
+            .chip {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 16px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                background: #fff;
+                font-weight: 600;
+                font-size: 13.5px;
+                color: var(--text);
+                white-space: nowrap;
+                transition: all .15s;
+            }
+
+            .chip:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+                background: var(--primary-soft);
+            }
+
+            .chip.is-active {
+                background: var(--text);
+                color: #fff;
+                border-color: var(--text);
+            }
+
+            /* ---------- Listings ---------- */
+            .section-head {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin: 38px 0 18px;
+            }
+
+            .section-head h2 {
+                font-size: 22px;
+                font-weight: 800;
+                margin: 0;
+            }
+
+            .section-head .road-rule {
+                width: 64px;
+                margin-top: 8px;
+            }
+
+            .section-head a {
+                font-size: 13.5px;
+                font-weight: 700;
+                color: var(--primary);
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns:repeat(4, 1fr);
+                gap: 18px;
+            }
+
+            .card {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+                transition: transform .18s ease, box-shadow .18s ease;
+                position: relative;
+            }
+
+            .card:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-lift);
+            }
+
+            .card-media {
+                position: relative;
+                aspect-ratio: 4/3;
+                overflow: hidden;
+                background: var(--bg-soft-2);
+            }
+
+            .card-media img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .badge {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: var(--success);
+                color: #fff;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 9px;
+                border-radius: 6px;
+                letter-spacing: .02em;
+            }
+
+            .badge.premium {
+                background: var(--accent);
+            }
+
+            .fav-btn {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                border: none;
+                background: rgba(255, 255, 255, .9);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--text-mute);
+                transition: color .15s, transform .15s;
+            }
+
+            .fav-btn:hover {
+                color: var(--accent);
+            }
+
+            .fav-btn.is-fav {
+                color: var(--accent);
+            }
+
+            .fav-btn.is-fav svg {
+                fill: var(--accent);
+            }
+
+            .fav-btn:active {
+                transform: scale(.88);
+            }
+
+            .card-body {
+                padding: 14px 14px 16px;
+            }
+
+            .price-tag {
+                display: inline-flex;
+                align-items: center;
+                font-weight: 800;
+                font-size: 17px;
+                color: var(--primary-dark);
+                background: var(--primary-soft);
+                padding: 4px 10px 4px 12px;
+                border-radius: 0 6px 6px 0;
+                position: relative;
+                margin-bottom: 9px;
+            }
+
+            .price-tag::before {
+                content: "";
+                position: absolute;
+                left: -6px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 0;
+                height: 0;
+                border-top: 12px solid transparent;
+                border-bottom: 12px solid transparent;
+                border-right: 6px solid var(--primary-soft);
+            }
+
+            .card-title {
+                font-size: 14.5px;
+                font-weight: 700;
+                margin: 0 0 6px;
+                line-height: 1.35;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                min-height: 38px;
+            }
+
+            .card-meta {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 12.5px;
+                color: var(--text-faint);
+            }
+
+            .card-meta svg {
+                flex-shrink: 0;
+            }
+
+            /* ---------- CTA banner ---------- */
             .banner {
-                flex-direction: column;
-                text-align: center;
+                margin: 56px 0;
+                border-radius: 20px;
+                padding: 44px 46px;
+                background: linear-gradient(120deg, var(--primary) 0%, var(--primary-dark) 100%);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 24px;
+                overflow: hidden;
+                position: relative;
             }
 
-            .foot-grid {
-                grid-template-columns:1fr;
+            .banner::after {
+                content: "";
+                position: absolute;
+                right: -40px;
+                top: -60px;
+                width: 260px;
+                height: 260px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255, 255, 255, .12), transparent 70%);
             }
-        }
-    </style>
-</head>
-<body>
-{% include 'Error.html' %}
 
-<header class="site">
-    <div class="wrap topbar">
-        <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
-        <nav class="nav">
-            <a href="{% url 'home' %}" class="active">Bosh sahifa</a>
-            <a href="#">Avtomobillar</a>
-            <a href="#">Ko'chmas mulk</a>
-            <a href="#">Elektronika</a>
-            <a href="#">Barcha kategoriyalar</a>
-        </nav>
-        <div class="top-actions">
-            <a href="{% url 'login' %}" class="icon-btn" title="Kirish">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="8" r="4"/>
-                    <path d="M4 21c1.6-4 5-6 8-6s6.4 2 8 6"/>
-                </svg>
-            </a>
-            <a href="{% url 'login' %}" class="btn btn-ghost">Kirish</a>
-            <a href="{% url 'profile' %}" class="btn btn-primary">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-                    <path d="M12 5v14M5 12h14"/>
-                </svg>
-                Elon joylash
-            </a>
-        </div>
-    </div>
-</header>
+            .banner h3 {
+                font-size: 24px;
+                margin: 0 0 6px;
+                font-weight: 800;
+            }
 
-<section class="hero">
-    <div class="wrap">
-        <h1>Sotib oling, soting —<br><span>minglab e'lonlar</span> bir manzilda.</h1>
-        <p>Avtomobil, uy-joy, elektronika va boshqa yuzlab kategoriyalarda O'zbekiston bo'ylab eng so'nggi e'lonlarni
-            toping.</p>
-        <div class="search-card">
-            <select>
-                <option>Barcha kategoriyalar</option>
-                <option>Avtomobillar</option>
-                <option>Ko'chmas mulk</option>
-                <option>Elektronika</option>
-                <option>Ish o'rinlari</option>
-            </select>
-            <input type="text" placeholder="Masalan: Chevrolet Cobalt, 2019">
-            <button class="btn btn-primary">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
-                    <circle cx="11" cy="11" r="7"/>
-                    <path d="m21 21-4.3-4.3"/>
-                </svg>
-                Qidirish
-            </button>
-        </div>
-        <div class="hero-stats">
-            <div><b>128 400+</b><span>faol e'lonlar</span></div>
-            <div><b>36 ta</b><span>viloyat va shahar</span></div>
-            <div><b>92 000+</b><span>ro'yxatdan o'tgan foydalanuvchi</span></div>
-        </div>
-    </div>
-</section>
+            .banner p {
+                margin: 0;
+                color: rgba(255, 255, 255, .82);
+                font-size: 14.5px;
+                max-width: 420px;
+            }
 
-<section class="cats">
-    <div class="wrap">
-        <div class="cats-row">
-            <button class="chip is-active">🚗 Avtomobillar</button>
-            <button class="chip">🏠 Ko'chmas mulk</button>
-            <button class="chip">📱 Elektronika</button>
-            <button class="chip">🛋️ Uy va bog'</button>
-            <button class="chip">💼 Ish o'rinlari</button>
-            <button class="chip">🧰 Xizmatlar</button>
-            <button class="chip">👗 Kiyim-kechak</button>
-            <button class="chip">🐾 Uy hayvonlari</button>
-            <button class="chip">📦 Boshqalar</button>
-        </div>
-    </div>
-</section>
+            .banner .btn {
+                background: #fff;
+                color: var(--primary-dark);
+            }
 
-<main class="wrap">
-    <div class="section-head">
-        <div><h2>Tavsiya etilgan e'lonlar</h2>
-            <div class="road-rule"></div>
-        </div>
-        <a href="#">Barchasini ko'rish →</a>
-    </div>
+            .banner .btn:hover {
+                background: var(--accent-soft);
+            }
 
-    <div class="grid" id="listing-grid">
 
-        <div class="card">
-            <div class="card-media">
-                <span class="badge premium">Tavsiya etiladi</span>
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
+            @media (max-width: 980px) {
+                .grid {
+                    grid-template-columns:repeat(2, 1fr);
+                }
+
+                nav.nav {
+                    display: none;
+                }
+
+                .foot-grid {
+                    grid-template-columns:1fr 1fr;
+                }
+
+                .hero h1 {
+                    font-size: 32px;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .grid {
+                    grid-template-columns:1fr 1fr;
+                    gap: 12px;
+                }
+
+                .search-card {
+                    flex-wrap: wrap;
+                }
+
+                .search-card select {
+                    flex: 1 1 100%;
+                    border-right: none;
+                    border-bottom: 1px solid var(--border);
+                }
+
+                .banner {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .foot-grid {
+                    grid-template-columns:1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'Error.html' %}
+
+
+    <section class="hero">
+        <div class="wrap">
+            <h1>Sotib oling, soting —<br><span>minglab e'lonlar</span> bir manzilda.</h1>
+            <p>Avtomobil, uy-joy, elektronika va boshqa yuzlab kategoriyalarda O'zbekiston bo'ylab eng so'nggi
+                e'lonlarni
+                toping.</p>
+            <div class="search-card">
+                <select>
+                    <option>Barcha kategoriyalar</option>
+                    <option>Avtomobillar</option>
+                    <option>Ko'chmas mulk</option>
+                    <option>Elektronika</option>
+                    <option>Ish o'rinlari</option>
+                </select>
+                <input type="text" placeholder="Masalan: Chevrolet Cobalt, 2019">
+                <button class="btn btn-primary">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2.4">
+                        <circle cx="11" cy="11" r="7"/>
+                        <path d="m21 21-4.3-4.3"/>
                     </svg>
+                    Qidirish
                 </button>
-                <a href="{% url 'detail' %}"><img src="https://picsum.photos/seed/auto1/480/360" alt="Chevrolet Cobalt"></a>
             </div>
-            <div class="card-body">
-                <span class="price-tag">148 500 000 so'm</span>
-                <h3 class="card-title"><a href="{% url 'detail' %}">Chevrolet Cobalt, 2021 yil, oq rang, gaz-benzin</a>
-                </h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Toshkent · Bugun
-                </div>
+            <div class="hero-stats">
+                <div><b>128 400+</b><span>faol e'lonlar</span></div>
+                <div><b>36 ta</b><span>viloyat va shahar</span></div>
+                <div><b>92 000+</b><span>ro'yxatdan o'tgan foydalanuvchi</span></div>
             </div>
         </div>
+    </section>
 
-        <div class="card">
-            <div class="card-media">
-                <span class="badge">Yangi</span>
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/flat2/480/360" alt="2 xonali kvartira">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">$38 000</span>
-                <h3 class="card-title">2 xonali kvartira, Chilonzor, 5/9 qavat, remont qilingan</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Toshkent · 2 soat oldin
-                </div>
+    <section class="cats">
+        <div class="wrap">
+            <div class="cats-row">
+                {% for i in categories %}
+                    <button class="chip" value="{{ i.id }}">{{ i.name }}</button>
+                {% endfor %}
+
+                {#                <button class="chip">📦 Boshqalar</button>#}
             </div>
         </div>
+    </section>
 
-        <div class="card">
-            <div class="card-media">
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/phone3/480/360" alt="iPhone 14 Pro">
+    <main class="wrap">
+        <div class="section-head">
+            <div><h2>Tavsiya etilgan e'lonlar</h2>
+                <div class="road-rule"></div>
             </div>
-            <div class="card-body">
-                <span class="price-tag">9 200 000 so'm</span>
-                <h3 class="card-title">iPhone 14 Pro 256GB, deep purple, holati a'lo</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Samarqand · Kecha
-                </div>
-            </div>
+            <a href="#">Barchasini ko'rish →</a>
+        </div>
+        <div class="grid" id="listing-grid">
+            {% for i in posts %}
+                <a href="{% url 'detail' i.id %}" class="card">
+                    <div class="card-media">
+                        {% if i.is_premium %}
+                            <span class="badge premium">Tavsiya etiladi</span>
+                        {% elif "day" not in i.created_at|timesince %}
+                            <span class="badge">Yangi</span>
+                        {% endif %}
+                        <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
+                            </svg>
+                        </button>
+                        <img src="{{ i.images.first.image.url }}">
+                    </div>
+                    <div class="card-body">
+                        <span class="price-tag">{{ i.price|floatformat:0|intcomma }} {{ i.currency }} </span>
+                        <h3 class="card-title">{{ i.title }}</h3>
+                        <div class="card-meta">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2">
+                                <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
+                                <circle cx="12" cy="10" r="2.5"/>
+                            </svg>
+                            {{ i.city }} ·
+                            {% if "day" not in i.created_at|timesince %}
+                                Bugun
+                            {% else %}
+                                {{ i.created_at|date:"d.m.Y" }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+
+            {% endfor %}
+
         </div>
 
-        <div class="card">
-            <div class="card-media">
-                <span class="badge premium">Tavsiya etiladi</span>
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/nexia4/480/360" alt="Chevrolet Nexia 3">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">112 000 000 so'm</span>
-                <h3 class="card-title">Chevrolet Nexia 3, 2020, kumush rang, mexanika</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Andijon · 3 kun oldin
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-media">
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/sofa5/480/360" alt="Divan">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">4 300 000 so'm</span>
-                <h3 class="card-title">Burchakli divan, yangi, yetkazib berish bilan</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Farg'ona · 5 soat oldin
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-media">
-                <span class="badge">Yangi</span>
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/malibu6/480/360" alt="Chevrolet Malibu 2">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">$21 400</span>
-                <h3 class="card-title">Chevrolet Malibu 2, 2018, to'liq komplektatsiya</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Buxoro · 1 kun oldin
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-media">
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/laptop7/480/360" alt="MacBook Air M2">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">13 800 000 so'm</span>
-                <h3 class="card-title">MacBook Air M2 13", 8/256GB, kafolat bilan</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Toshkent · 6 soat oldin
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-media">
-                <span class="badge premium">Tavsiya etiladi</span>
-                <button class="fav-btn" onclick="this.classList.toggle('is-fav')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7.5-4.6-10-9.3C.4 8 2 4 6 4c2 0 3.6 1.1 4.5 2.6L12 8.2l1.5-1.6C14.4 5.1 16 4 18 4c4 0 5.6 4 4 7.7C19.5 16.4 12 21 12 21z"/>
-                    </svg>
-                </button>
-                <img src="https://picsum.photos/seed/house8/480/360" alt="Hovli uy">
-            </div>
-            <div class="card-body">
-                <span class="price-tag">$65 000</span>
-                <h3 class="card-title">Hovli uy, 6 sotix, 2 qavat, gaz-svet bor</h3>
-                <div class="card-meta">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/>
-                        <circle cx="12" cy="10" r="2.5"/>
-                    </svg>
-                    Namangan · 2 kun oldin
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="banner">
-        <div>
-            <h3>E'loningizni bugun joylang</h3>
-            <p>Ro'yxatdan o'ting va bir necha daqiqada minglab xaridorlarga chiqing — bepul va oddiy.</p>
-        </div>
-        <a href="{% url 'profile' %}" class="btn">Elon joylash →</a>
-    </div>
-</main>
-
-<footer>
-    <div class="wrap">
-        <div class="foot-grid">
+        <div class="banner">
             <div>
-                <a href="{% url 'home' %}" class="brand"><span class="dot"></span>AutoElon</a>
-                <p style="color:var(--text-mute);font-size:13.5px;margin-top:12px;max-width:260px;">O'zbekistondagi eng
-                    yirik onlayn e'lonlar platformasi — sotib oling, soting, ijaraga bering.</p>
+                <h3>E'loningizni bugun joylang</h3>
+                <p>Ro'yxatdan o'ting va bir necha daqiqada minglab xaridorlarga chiqing — bepul va oddiy.</p>
             </div>
-            <div>
-                <h4>Kategoriyalar</h4>
-                <ul>
-                    <li><a href="#">Avtomobillar</a></li>
-                    <li><a href="#">Ko'chmas mulk</a></li>
-                    <li><a href="#">Elektronika</a></li>
-                    <li><a href="#">Ish o'rinlari</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Kompaniya</h4>
-                <ul>
-                    <li><a href="#">Biz haqimizda</a></li>
-                    <li><a href="#">Aloqa</a></li>
-                    <li><a href="#">Qoidalar</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4>Hisob</h4>
-                <ul>
-                    <li><a href="{% url 'login' %}">Kirish</a></li>
-                    <li><a href="{% url 'register' %}">Ro'yxatdan o'tish</a></li>
-                    <li><a href="{% url 'profile' %}">Profil</a></li>
-                </ul>
-            </div>
+            <a href="{% url 'profile' %}" class="btn">Elon joylash →</a>
         </div>
-        <div class="foot-bottom">
-            <span>© 2026 AutoElon. Barcha huquqlar himoyalangan.</span>
-            <span>Toshkent, O'zbekiston</span>
-        </div>
-    </div>
-</footer>
+    </main>
 
-</body>
-</html>
+
+    </body>
+    </html>
+{% endblock %}

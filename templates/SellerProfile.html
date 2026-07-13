@@ -1,0 +1,806 @@
+{% extends 'Base.html' %}
+
+{% block base %}
+    {% load humanize %}
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ seller.full_name }} — AutoElon</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+              rel="stylesheet">
+        <style>
+            :root {
+                --bg: #ffffff;
+                --bg-soft: #F6F7FA;
+                --bg-soft-2: #F0F2F6;
+                --border: #E7E9EE;
+                --text: #12151C;
+                --text-mute: #6B7280;
+                --text-faint: #9AA1AC;
+                --primary: #1E4FD8;
+                --primary-dark: #153AA6;
+                --primary-soft: #EAF0FE;
+                --accent: #FF6A3D;
+                --accent-dark: #E5541F;
+                --accent-soft: #FFF0E9;
+                --success: #16A34A;
+                --success-soft: #00ff67;
+                --danger: #DC2626;
+                --radius: 14px;
+                --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
+                --shadow-lift: 0 12px 32px -8px rgba(18, 21, 28, .18);
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: 'Inter', sans-serif;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            h1, h2, h3, .brand, .nav a, .btn {
+                font-family: 'Manrope', sans-serif;
+            }
+
+            a {
+                color: inherit;
+                text-decoration: none;
+            }
+
+            img {
+                max-width: 100%;
+                display: block;
+            }
+
+            button {
+                font: inherit;
+                cursor: pointer;
+            }
+
+            .wrap {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 0 24px;
+            }
+
+            .road-rule {
+                height: 3px;
+                background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
+                border-radius: 2px;
+            }
+
+            /* ---------- Header ---------- */
+            header.site {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+                background: rgba(255, 255, 255, .92);
+                backdrop-filter: saturate(180%) blur(10px);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .topbar {
+                display: flex;
+                align-items: center;
+                gap: 28px;
+                height: 74px;
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                font-weight: 800;
+                font-size: 21px;
+                color: var(--text);
+                flex-shrink: 0;
+            }
+
+            .brand .dot {
+                width: 11px;
+                height: 11px;
+                border-radius: 3px;
+                background: var(--accent);
+                transform: rotate(45deg);
+            }
+
+            .back-button {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: var(--primary);
+                font-weight: 600;
+                font-size: 14px;
+                margin-bottom: 20px;
+                transition: gap .2s ease;
+            }
+
+            .back-button:hover {
+                gap: 10px;
+            }
+
+            .back-button svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            /* ---------- Profile card (new layout) ---------- */
+            .profile-header {
+                background: linear-gradient(160deg, #EAF0FE 0%, #FFF0E9 100%);
+                padding: 40px 24px 64px;
+            }
+
+            .profile-card {
+                background: #fff;
+                border-radius: 22px;
+                box-shadow: var(--shadow-lift);
+                padding: 30px;
+                display: flex;
+                gap: 26px;
+                align-items: flex-start;
+            }
+
+            /* LOGO / avatar */
+            .profile-card-avatar {
+                width: 108px;
+                height: 108px;
+                border-radius: 24px;
+                background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 42px;
+                font-weight: 800;
+                color: #fff;
+                overflow: hidden;
+                flex-shrink: 0;
+            }
+
+            .profile-card-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .profile-card-main {
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Name row + phone action, side by side */
+            .profile-card-toprow {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+
+            .profile-card-name {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+            }
+
+            .profile-card-name h1 {
+                font-size: 25px;
+                font-weight: 800;
+                margin: 0;
+                color: var(--text);
+                line-height: 1.2;
+            }
+
+            .profile-card-phone {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                background: var(--primary-soft);
+                border: none;
+                color: var(--primary-dark);
+                padding: 9px 15px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 13.5px;
+                flex-shrink: 0;
+            }
+
+            /* Badges row: role pill + online pill */
+            .profile-badges-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+
+            .pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                padding: 4px 11px;
+                border-radius: 999px;
+                font-size: 12px;
+                font-weight: 700;
+                line-height: 1.6;
+            }
+
+            .pill.role-admin {
+                background: var(--accent-soft);
+                color: var(--accent-dark);
+            }
+
+            .pill.role-gemini {
+                background: #F1EAFE;
+                color: #7C3AED;
+            }
+
+            .pill.role-user {
+                background: var(--bg-soft-2);
+                color: var(--text-mute);
+            }
+
+            .pill.online {
+                background: rgba(22, 163, 74, .1);
+                color: var(--success);
+            }
+
+            .pill.online .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--success);
+                display: inline-block;
+            }
+
+            .pill.offline {
+                background: var(--bg-soft-2);
+                color: var(--text-faint);
+                font-weight: 600;
+            }
+
+            .pill.joined {
+                background: transparent;
+                color: var(--text-faint);
+                font-weight: 600;
+                padding-left: 0;
+            }
+
+            /* Bio */
+            .profile-card-bio {
+                margin-top: 14px;
+                color: var(--text-mute);
+                font-size: 14.5px;
+                line-height: 1.6;
+                max-width: 620px;
+            }
+
+            /* Stats row, divided instead of boxed */
+            .profile-stats-row {
+                margin-top: 26px;
+                padding-top: 22px;
+                border-top: 1px solid var(--border);
+                display: flex;
+            }
+
+            .profile-stat {
+                flex: 1;
+                text-align: center;
+                position: relative;
+            }
+
+            .profile-stat + .profile-stat::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 4px;
+                bottom: 4px;
+                width: 1px;
+                background: var(--border);
+            }
+
+            .profile-stat .value {
+                font-size: 22px;
+                font-weight: 800;
+                color: var(--primary-dark);
+                margin-bottom: 3px;
+            }
+
+            .profile-stat .label {
+                font-size: 12px;
+                font-weight: 600;
+                color: var(--text-faint);
+                text-transform: uppercase;
+                letter-spacing: .02em;
+            }
+
+            /* ---------- Posts Section ---------- */
+            .posts-section {
+                padding: 46px 0;
+            }
+
+            .section-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 24px;
+            }
+
+            .section-head h2 {
+                font-size: 26px;
+                font-weight: 800;
+                margin: 0;
+            }
+
+            .section-head .road-rule {
+                width: 60px;
+                margin: 8px 0 0;
+            }
+
+            .posts-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+            }
+
+            .post-card {
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                overflow: hidden;
+                transition: transform .18s ease, box-shadow .18s ease;
+            }
+
+            .post-card:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-lift);
+            }
+
+            .post-card-media {
+                position: relative;
+                aspect-ratio: 4/3;
+                background: var(--bg-soft-2);
+                overflow: hidden;
+            }
+
+            .post-card-media img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .post-card-media .status {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 11px;
+                font-weight: 700;
+                padding: 4px 9px;
+                border-radius: 6px;
+                color: #fff;
+                background: var(--success);
+            }
+
+            .post-card-body {
+                padding: 16px;
+            }
+
+            .post-card-price {
+                font-size: 18px;
+                font-weight: 800;
+                color: var(--primary-dark);
+                margin-bottom: 8px;
+            }
+
+            .post-card-title {
+                font-size: 14px;
+                font-weight: 700;
+                margin: 0 0 8px;
+                line-height: 1.35;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                min-height: 36px;
+                color: var(--text);
+            }
+
+            .post-card-meta {
+                font-size: 12px;
+                color: var(--text-faint);
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+
+            .empty-state {
+                text-align: center;
+                padding: 60px 20px;
+                color: var(--text-faint);
+            }
+
+            .empty-state svg {
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 16px;
+                opacity: 0.3;
+            }
+
+            .empty-state p {
+                font-size: 16px;
+                margin: 0;
+            }
+
+            footer {
+                border-top: 1px solid var(--border);
+                background: var(--bg-soft);
+                padding: 26px 0;
+                text-align: center;
+                font-size: 13px;
+                color: var(--text-faint);
+                margin-top: 40px;
+            }
+
+            @media (max-width: 1024px) {
+                .posts-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .posts-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .profile-card {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    padding: 26px 20px;
+                }
+
+                .profile-card-toprow {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .profile-card-name {
+                    justify-content: center;
+                }
+
+                .profile-badges-row {
+                    justify-content: center;
+                }
+
+                .profile-card-bio {
+                    max-width: 100%;
+                }
+
+                .profile-stats-row {
+                    flex-wrap: wrap;
+                    gap: 14px 0;
+                }
+
+                .profile-stat {
+                    min-width: 33%;
+                }
+
+                .section-head {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+
+            @media (max-width: 560px) {
+                .posts-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .profile-card-avatar {
+                    width: 88px;
+                    height: 88px;
+                    font-size: 34px;
+                    border-radius: 20px;
+                }
+
+                .profile-card-name h1 {
+                    font-size: 21px;
+                }
+            }
+
+            /* ---------- Tier badges (icon markup untouched) ---------- */
+            .tier-badge {
+                position: relative;
+                width: 19px;
+                height: 19px;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                overflow: hidden;
+                border-radius: 6px;
+                transition: transform .15s ease;
+            }
+
+            .tier-badge:hover {
+                transform: scale(1.14);
+            }
+
+            .tier-badge svg {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+
+            .tier-badge.premium {
+                animation: tier-pulse 2.6s ease-in-out infinite;
+            }
+
+            .tier-badge.premium svg {
+                filter: drop-shadow(0 1px 2px rgba(255, 106, 61, .45));
+            }
+
+            .tier-badge.standard svg {
+                filter: drop-shadow(0 1px 2px rgba(30, 79, 216, .4));
+            }
+
+            .tier-badge.basic {
+                background: var(--success-soft);
+                color: var(--success);
+                border-radius: 50%;
+            }
+
+            .tier-badge.basic svg {
+                width: 11px;
+                height: 11px;
+                margin: auto;
+                display: block;
+            }
+
+            .tier-shine {
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, .85) 48%, rgba(255, 255, 255, .85) 52%, transparent 70%);
+                transform: translateX(-140%);
+                animation: tier-sweep 3.2s ease-in-out infinite;
+                mix-blend-mode: overlay;
+            }
+
+            @keyframes tier-sweep {
+                0% {
+                    transform: translateX(-140%);
+                }
+                35% {
+                    transform: translateX(140%);
+                }
+                100% {
+                    transform: translateX(140%);
+                }
+            }
+
+            @keyframes tier-pulse {
+                0%, 100% {
+                    filter: drop-shadow(0 0 0 rgba(255, 154, 61, 0));
+                }
+                50% {
+                    filter: drop-shadow(0 0 6px rgba(255, 154, 61, .55));
+                }
+            }
+        </style>
+    </head>
+    <body>
+    {% include 'Error.html' %}
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+        <div class="wrap">
+            <a href="{% url 'home' %}" class="back-button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Orqaga
+            </a>
+
+            <div class="profile-card">
+                <!-- LOGO / AVATAR -->
+                <div class="profile-card-avatar">
+                    {% if seller.avatar %}
+                        <img src="{{ seller.avatar.url }}" alt="{{ seller.full_name }}">
+                    {% else %}
+                        {{ seller.full_name|slice:":1"|upper }}
+                    {% endif %}
+                </div>
+
+                <div class="profile-card-main">
+                    <!-- NAME + VIP BADGE, PHONE ACTION -->
+                    <div class="profile-card-toprow">
+                        <div class="profile-card-name">
+                            <h1>{{ seller.full_name }}</h1>
+                            {% if seller.active_plan.code == 'premium' %}
+                                <a href="{% url 'tariff-list' %}" class="tier-badge premium"
+                                   title="Premium — Tasdiqlangan va ishonchli"
+                                   onclick="openVerifyModal()">
+                                    <svg viewBox="0 0 24 24" fill="url(#grad-premium)">
+                                        <defs>
+                                            <linearGradient id="grad-premium" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#FFD874"/>
+                                                <stop offset="55%" stop-color="#FF9A3D"/>
+                                                <stop offset="100%" stop-color="#FF6A3D"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M12 2 3 7v6c0 5 3.8 8.6 9 9 5.2-.4 9-4 9-9V7l-9-5z"/>
+                                    </svg>
+                                    <span class="tier-shine"></span>
+                                </a>
+                            {% elif seller.active_plan.code == 'standard' %}
+                                <a href="{% url 'tariff-list' %}" class="tier-badge standard"
+                                   title="O'rta — Tasdiqlangan va ishonchli"
+                                   onclick="openVerifyModal()">
+                                    <svg viewBox="0 0 24 24" fill="url(#grad-standard)">
+                                        <defs>
+                                            <linearGradient id="grad-standard" x1="0" y1="0" x2="1" y2="1">
+                                                <stop offset="0%" stop-color="#8FB1FF"/>
+                                                <stop offset="55%" stop-color="#3B6FE8"/>
+                                                <stop offset="100%" stop-color="#1E4FD8"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M12 2 3 7v6c0 5 3.8 8.6 9 9 5.2-.4 9-4 9-9V7l-9-5z"/>
+                                        <path d="m9 12 2 2 4-4" stroke="#fff" stroke-width="2.2" fill="none"
+                                              stroke-linecap="round"
+                                              stroke-linejoin="round"/>
+                                    </svg>
+                                </a>
+                            {% elif seller.is_verified %}
+                                <a href="{% url 'tariff-list' %}" class="tier-badge basic"
+                                   title="Tasdiqlangan va ishonchli"
+                                   onclick="openVerifyModal()">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                        <path d="M20 6 9 17l-5-5"/>
+                                    </svg>
+                                </a>
+                            {% endif %}
+                        </div>
+
+                        <button class="profile-card-phone" onclick="this.innerText='+{{ seller.phone_number }}'">
+                            📞 Raqamni ko'rsatish
+                        </button>
+                    </div>
+
+                    <!-- ROLE + ONLINE STATUS -->
+                    <div class="profile-badges-row">
+                        {% if seller.is_superuser or seller.role == 'admin' %}
+                            <span class="pill role-admin">Admin</span>
+                        {% elif seller.role == 'gemini' %}
+                            <span class="pill role-gemini">Gemini</span>
+                        {% else %}
+                            <span class="pill role-user">Foydalanuvchi</span>
+                        {% endif %}
+
+                        {% if seller.is_online %}
+                            <span class="pill online">
+                                <span class="dot"></span>
+                                Onlayn
+                            </span>
+                        {% else %}
+                            <span class="pill offline">{{ seller.last_online|naturaltime }}</span>
+                        {% endif %}
+
+                        <span class="pill joined">{{ seller.created_at|date:"Y" }}-yildan a'zo</span>
+                    </div>
+
+                    <!-- BIO — faqat mavjud bo'lsa chiqadi -->
+                    {% if seller.bio %}
+                        <p class="profile-card-bio">{{ seller.bio }}</p>
+                    {% endif %}
+
+                    <!-- STATS -->
+                    <div class="profile-stats-row">
+                        <div class="profile-stat">
+                            <div class="value">{{ posts_count }}</div>
+                            <div class="label">E'lonlar</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="value">4.9</div>
+                            <div class="label">Reyting</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="value">{{ total_views }}</div>
+                            <div class="label">Ko'rish</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- POSTS SECTION -->
+    <div class="wrap">
+        <div class="posts-section">
+            <div class="section-head">
+                <div>
+                    <h2>Barcha e'lonlar</h2>
+                    <div class="road-rule"></div>
+                </div>
+            </div>
+
+            {% if seller_posts %}
+                <div class="posts-grid">
+                    {% for post in seller_posts %}
+                        <a href="{% url 'detail' post.id %}" class="post-card">
+                            <div class="post-card-media">
+                                {% if post.status == 'active' %}
+                                    <span class="status">Faol</span>
+                                {% elif post.status == 'pending' %}
+                                    <span class="status" style="background: #D97706;">Ko'rib chiqilmoqda</span>
+                                {% elif post.status == 'sold' %}
+                                    <span class="status" style="background: var(--text-mute);">Sotilgan</span>
+                                {% endif %}
+                                <img src="{{ post.images.first.image.url }}" alt="{{ post.title }}">
+                            </div>
+                            <div class="post-card-body">
+                                <div class="post-card-price">{{ post.price|floatformat:0 }} {{ post.get_currency_display }}</div>
+                                <h3 class="post-card-title">{{ post.title }}</h3>
+                                <div class="post-card-meta">
+                                    📍 {{ post.city }}
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+                    </svg>
+                    <p>Hozircha ushbu sotuvchining faol e'lonlari yo'q</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        // Smooth scroll on link click
+        document.querySelectorAll('a[href*="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({behavior: 'smooth'});
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const overlay = document.getElementById('verify-modal-overlay');
+            if (overlay) {
+                overlay.addEventListener('click', function (e) {
+                    if (e.target === this) {
+                        closeVerifyModal();
+                    }
+                });
+            }
+        });
+    </script>
+    </body>
+    </html>
+{% endblock %}

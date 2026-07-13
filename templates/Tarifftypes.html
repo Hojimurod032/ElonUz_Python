@@ -1,0 +1,258 @@
+{% extends 'Base.html' %}
+
+{% block base %}
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AutoElon — Tariflar</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+              rel="stylesheet">
+        <style>
+            :root {
+                --bg: #ffffff;
+                --bg-soft: #F6F7FA;
+                --bg-soft-2: #F0F2F6;
+                --border: #E7E9EE;
+                --text: #12151C;
+                --text-mute: #6B7280;
+                --text-faint: #9AA1AC;
+                --primary: #1E4FD8;
+                --primary-dark: #153AA6;
+                --primary-soft: #EAF0FE;
+                --accent: #FF6A3D;
+                --accent-dark: #E5541F;
+                --accent-soft: #FFF0E9;
+                --success: #16A34A;
+                --success-soft: #000000;
+                --radius: 16px;
+                --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
+                --shadow-lift: 0 20px 48px -14px rgba(18, 21, 28, .20);
+            }
+
+            * { box-sizing: border-box; }
+            html, body { margin: 0; padding: 0; }
+            body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+            h1, h2, h3, .brand, .btn { font-family: 'Manrope', sans-serif; }
+            a { color: inherit; text-decoration: none; }
+            ul { list-style: none; margin: 0; padding: 0; }
+            button { font: inherit; cursor: pointer; }
+            form { margin: 0; }
+
+            .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+            .road-rule {
+                height: 3px; width: 56px; margin: 0 auto; border-radius: 2px;
+                background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
+            }
+
+            /* ---------- Hero ---------- */
+            .tariff-hero {
+                padding: 60px 0 20px; text-align: center;
+                background: radial-gradient(680px 240px at 50% -10%, var(--primary-soft), transparent 60%);
+            }
+            .tariff-hero .eyebrow {
+                display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700; color: var(--primary);
+                background: var(--primary-soft); padding: 6px 14px; border-radius: 999px; margin-bottom: 18px;
+            }
+            .tariff-hero h1 { font-size: 36px; font-weight: 800; margin: 0 0 12px; letter-spacing: -.02em; }
+            .tariff-hero p { font-size: 15.5px; color: var(--text-mute); max-width: 480px; margin: 0 auto 26px; line-height: 1.6; }
+
+            .balance-pill {
+                display: inline-flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--border);
+                border-radius: 999px; padding: 8px 18px 8px 8px; margin-bottom: 40px; box-shadow: var(--shadow);
+            }
+            .balance-pill .dot-icon {
+                width: 30px; height: 30px; border-radius: 50%; background: var(--success-soft); color: var(--success);
+                display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+            }
+            .balance-pill .label { font-size: 11px; color: var(--text-faint); font-weight: 700; text-transform: uppercase; letter-spacing: .02em; display: block; }
+            .balance-pill .amount { font-size: 15px; font-weight: 800; font-family: 'Manrope'; }
+
+            /* ---------- Pricing grid ---------- */
+            .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; padding: 0 0 70px; align-items: stretch; }
+
+            .plan {
+                background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 32px 28px;
+                display: flex; flex-direction: column; position: relative; transition: transform .2s ease, box-shadow .2s ease;
+            }
+            .plan:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+            .plan.is-popular { border-color: var(--accent); box-shadow: 0 16px 40px -16px rgba(255, 106, 61, .35); transform: scale(1.03); }
+            .plan.is-popular:hover { transform: scale(1.03) translateY(-4px); }
+
+            .popular-tag {
+                position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+                background: var(--accent); color: #fff; font-size: 11.5px; font-weight: 800; padding: 5px 16px; border-radius: 999px;
+                letter-spacing: .02em; box-shadow: 0 6px 14px -4px rgba(255, 106, 61, .5);
+            }
+            .current-tag {
+                position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+                background: var(--success); color: #fff; font-size: 11.5px; font-weight: 800; padding: 5px 16px; border-radius: 999px;
+                letter-spacing: .02em; box-shadow: 0 6px 14px -4px rgba(22, 163, 74, .5);
+            }
+
+            .plan-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+            .plan.basic .plan-icon { background: var(--bg-soft-2); color: var(--text-mute); }
+            .plan.standard .plan-icon { background: var(--primary-soft); color: var(--primary); }
+            .plan.premium .plan-icon { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; }
+
+            .plan h3 { font-size: 19px; font-weight: 800; margin: 0 0 4px; }
+            .plan .plan-sub { font-size: 13px; color: var(--text-faint); margin: 0 0 22px; }
+
+            .plan .price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 26px; }
+            .plan .price-num { font-size: 32px; font-weight: 800; letter-spacing: -.02em; }
+            .plan .price-unit { font-size: 13.5px; color: var(--text-faint); font-weight: 600; }
+
+            .plan .feat-list { display: flex; flex-direction: column; gap: 13px; margin-bottom: 28px; flex: 1; }
+            .plan .feat-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--text); line-height: 1.45; }
+            .plan .feat-list li svg { flex-shrink: 0; margin-top: 2px; }
+            .plan .feat-list li.on svg { color: var(--success); }
+            .plan .feat-list li.off { color: var(--text-faint); }
+            .plan .feat-list li.off svg { color: var(--text-faint); }
+            .plan .feat-list li b { font-weight: 700; }
+
+            .plan-btn {
+                width: 100%; padding: 13px 0; border-radius: 11px; font-weight: 700; font-size: 14.5px; text-align: center;
+                border: 1px solid transparent; transition: all .15s; display: block;
+            }
+            .plan.basic .plan-btn { background: var(--bg-soft); color: var(--text); border-color: var(--border); }
+            .plan.basic .plan-btn:hover { background: var(--bg-soft-2); }
+            .plan.standard .plan-btn { background: var(--primary-soft); color: var(--primary-dark); }
+            .plan.standard .plan-btn:hover { background: var(--primary); color: #fff; }
+            .plan.premium .plan-btn { background: var(--accent); color: #fff; box-shadow: 0 8px 20px -8px rgba(255, 106, 61, .55); }
+            .plan.premium .plan-btn:hover { background: var(--accent-dark); }
+
+            .plan-btn.is-current { background: var(--success-soft); color: var(--success); cursor: default; box-shadow: none; }
+            .plan-btn.is-current:hover { background: var(--success-soft); }
+
+            /* ---------- FAQ / note ---------- */
+            .tariff-note {
+                max-width: 640px; margin: 0 auto 70px; text-align: center; background: var(--bg-soft); border-radius: 14px;
+                padding: 22px 28px; font-size: 13.5px; color: var(--text-mute); line-height: 1.7;
+            }
+            .tariff-note b { color: var(--text); }
+
+            @media (max-width: 900px) {
+                .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+                .plan.is-popular { transform: none; }
+                .plan.is-popular:hover { transform: translateY(-4px); }
+                .tariff-hero h1 { font-size: 28px; }
+            }
+        </style>
+    </head>
+    <body>
+
+    <section class="tariff-hero">
+        <div class="wrap">
+            <span class="eyebrow">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="m9 12 2 2 4-4"/><path d="M12 2 3 7v6c0 5 3.8 8.6 9 9 5.2-.4 9-4 9-9V7l-9-5z"/></svg>
+                Tariflar
+            </span>
+            <h1>O'zingizga mos tarifni tanlang</h1>
+            <p>E'lon joylash imkoniyatlaringizni kengaytiring, ko'proq xaridorga yeting va tasdiqlangan profil bilan ishonchni oshiring.</p>
+
+            <div class="balance-pill">
+                <span class="dot-icon">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                </span>
+                <span>
+                    <span class="label">Balansingiz</span>
+                    <span class="amount">{{ request.user.balance|default:"0" }} so'm</span>
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <div class="wrap">
+        <div class="pricing-grid">
+
+            {% for plan in plans %}
+                <div class="plan {{ plan.code }}{% if plan.code == 'premium' %} is-popular{% endif %}">
+
+                    {% if plan.code == 'premium' %}
+                        <span class="popular-tag">Eng mashhur</span>
+                    {% elif request.user.active_plan.code == plan.code %}
+                        <span class="current-tag">Hozirgi tarif</span>
+                    {% endif %}
+
+                    <div class="plan-icon">
+                        {% if plan.code == 'basic' %}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                        {% elif plan.code == 'standard' %}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg>
+                        {% else %}
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 12 2 2 4-4"/><path d="M12 2 3 7v6c0 5 3.8 8.6 9 9 5.2-.4 9-4 9-9V7l-9-5z"/></svg>
+                        {% endif %}
+                    </div>
+
+                    <h3>{{ plan.name }}</h3>
+                    <p class="plan-sub">
+                        {% if plan.code == 'basic' %}Yangi boshlovchilar uchun
+                        {% elif plan.code == 'standard' %}Faol sotuvchilar uchun
+                        {% else %}Professional sotuvchilar uchun{% endif %}
+                    </p>
+
+                    <div class="price-row">
+                        {% if plan.price == 0 %}
+                            <span class="price-num">0 so'm</span>
+                            <span class="price-unit">/ doim bepul</span>
+                        {% else %}
+                            <span class="price-num">{{ plan.price|floatformat:0 }} so'm</span>
+                            <span class="price-unit">/ oyiga</span>
+                        {% endif %}
+                    </div>
+
+                    <ul class="feat-list">
+                        <li class="on">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                            Kuniga <b>{{ plan.daily_limit }} ta</b> e'lon joylash
+                        </li>
+                        <li class="on">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                            Jami <b>{{ plan.total_limit }} ta</b> faol e'lon
+                        </li>
+                        <li class="{% if plan.auto_verified %}on{% else %}off{% endif %}">
+                            {% if plan.auto_verified %}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                            {% else %}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                            {% endif %}
+                            Tasdiqlangan profil belgisi
+                        </li>
+                        <li class="{% if plan.priority_search %}on{% else %}off{% endif %}">
+                            {% if plan.priority_search %}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+                            {% else %}
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                            {% endif %}
+                            Qidiruvda yuqorida chiqish
+                        </li>
+                    </ul>
+
+                    {% if request.user.active_plan.code == plan.code %}
+                        <span class="plan-btn is-current">✓ Hozirgi tarifingiz</span>
+                    {% else %}
+                        <form method="post" action="{% url 'buy-plan' plan.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="plan-btn">
+                                {% if plan.price == 0 %}Bepul tarifga o'tish{% else %}{{ plan.name }}ni tanlash{% endif %}
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="tariff-note">
+            <b>Eslatma:</b> to'lov balansingizdan avtomatik yechiladi va tarif darhol faollashadi. Agar balansingiz yetarli bo'lmasa, avval
+            <a href="{% url 'payment' %}" style="color:var(--primary);font-weight:700;">balansni to'ldiring</a>.
+        </div>
+    </div>
+
+    </body>
+    </html>
+{% endblock %}

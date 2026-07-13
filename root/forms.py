@@ -5,7 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.core.exceptions import ValidationError
 from django.forms.models import ModelForm
 
-from root.models import User
+from root.models import User, Post
 
 
 class RegisterForm(ModelForm):
@@ -47,3 +47,9 @@ class LoginForm(ModelForm):
         if not check_password(password, user_data.password):
             raise ValidationError("Parol xato kiritildi")
         login(self.request, user_data)
+
+
+class CreatePostForm(ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'category', 'city', 'price', 'currency', 'desc']

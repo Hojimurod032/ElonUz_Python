@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElonUz — E'lon joylandi!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --bg-soft: #F6F7FA;
+            --border: #E7E9EE;
+            --text: #12151C;
+            --text-mute: #6B7280;
+            --text-faint: #9AA1AC;
+            --primary: #1E4FD8;
+            --primary-dark: #153AA6;
+            --primary-soft: #EAF0FE;
+            --accent: #FF6A3D;
+            --accent-dark: #E5541F;
+            --success: #16A34A;
+            --success-soft: #EAFBF1;
+            --radius: 16px;
+            --shadow: 0 1px 2px rgba(18, 21, 28, .04), 0 8px 24px -12px rgba(18, 21, 28, .10);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        body {
+            background: var(--bg-soft);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1, .brand {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .brand-top {
+            position: fixed;
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-weight: 800;
+            font-size: 19px;
+            color: var(--text);
+        }
+
+        .brand-top .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            background: var(--accent);
+            transform: rotate(45deg);
+        }
+
+        .road-rule {
+            height: 3px;
+            width: 56px;
+            margin: 0 auto 24px;
+            border-radius: 2px;
+            background-image: repeating-linear-gradient(90deg, var(--accent) 0 22px, transparent 22px 34px);
+        }
+
+        .card {
+            position: relative;
+            z-index: 2;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 48px 42px 40px;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            animation: pop .5s cubic-bezier(.2, 1.4, .4, 1);
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(.85) translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .check-badge {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            margin: 0 auto 22px;
+            background: var(--success-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: badge-in .6s .1s cubic-bezier(.2, 1.6, .4, 1) both;
+        }
+
+        @keyframes badge-in {
+            from {
+                transform: scale(0) rotate(-20deg);
+            }
+            to {
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        .check-badge svg {
+            color: var(--success);
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0 0 10px;
+        }
+
+        .sub {
+            font-size: 14.5px;
+            color: var(--text-mute);
+            line-height: 1.6;
+            margin: 0 0 8px;
+        }
+
+        .note {
+            font-size: 13px;
+            color: var(--text-faint);
+            background: var(--bg-soft);
+            border-radius: 10px;
+            padding: 11px 14px;
+            margin: 18px 0 26px;
+            line-height: 1.55;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px 0;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14.5px;
+            border: 1px solid transparent;
+            font-family: 'Manrope', sans-serif;
+            transition: all .15s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 20px -8px rgba(255, 106, 61, .55);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn-ghost {
+            background: #fff;
+            color: var(--text);
+            border-color: var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-soft);
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<a href="{% url 'home' %}" class="brand-top"><span class="dot"></span>ElonUz</a>
+
+<div class="card">
+    <div class="check-badge">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M20 6 9 17l-5-5"/>
+        </svg>
+    </div>
+    <div class="road-rule"></div>
+    <h1>E'loningiz joylandi! 🎉</h1>
+    <p class="sub">Tabriklaymiz — e'loningiz muvaffaqiyatli qabul qilindi va tez orada faollashadi.</p>
+    <div class="note">Moderatsiya odatda bir necha daqiqadan bir necha soatgacha vaqt oladi. Holatini profilingizdan
+        kuzatib borishingiz mumkin.
+    </div>
+    <div class="actions">
+        <a href="{% url 'profile' %}" class="btn btn-primary">Mening e'lonlarim</a>
+        <a href="{% url 'home' %}" class="btn btn-ghost">Bosh sahifaga qaytish</a>
+    </div>
+</div>
+
+<script>
+    // Kichkina, yengil konfetti animatsiyasi — tashqi kutubxonasiz
+    (function () {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+
+        const colors = ['#FF6A3D', '#1E4FD8', '#16A34A', '#FFC24B', '#12151C'];
+        const pieces = Array.from({length: 140}, () => ({
+            x: Math.random() * w,
+            y: -20 - Math.random() * h * 0.5,
+            size: 6 + Math.random() * 6,
+            speedY: 2 + Math.random() * 3,
+            speedX: (Math.random() - 0.5) * 2,
+            rotation: Math.random() * 360,
+            rotationSpeed: (Math.random() - 0.5) * 8,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            shape: Math.random() > 0.5 ? 'rect' : 'circle'
+        }));
+
+        let frame = 0;
+        const maxFrames = 260;
+
+        function draw() {
+            frame++;
+            ctx.clearRect(0, 0, w, h);
+            pieces.forEach(p => {
+                p.y += p.speedY;
+                p.x += p.speedX;
+                p.rotation += p.rotationSpeed;
+                if (p.y > h + 20) p.y = -20;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                if (p.shape === 'rect') {
+                    ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            });
+
+            if (frame < maxFrames) {
+                requestAnimationFrame(draw);
+            } else {
+                // asta-sekin yo'qoladi
+                let opacity = 1;
+                const fade = setInterval(() => {
+                    opacity -= 0.05;
+                    canvas.style.opacity = opacity;
+                    if (opacity <= 0) {
+                        clearInterval(fade);
+                        ctx.clearRect(0, 0, w, h);
+                    }
+                }, 40);
+            }
+        }
+
+        draw();
+    })();
+</script>
+</body>
+</html>

@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-dk)jqs2!zz^+nvbfz1wd7+s%%0k%pem00pjb*yg!0=j0ayuh9u
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,9 +16,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "root"
+    "root",
+    'django.contrib.humanize',
 ]
 
+LOGIN_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
 AUTH_USER_MODEL = 'root.User'
 
 MIDDLEWARE = [
@@ -29,6 +33,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'root.middleware.UpdateLastOnlineMiddleware',
 ]
 
 ROOT_URLCONF = 'elonuz.urls'
@@ -88,3 +93,6 @@ STATIC_URL = 'static/'
 # ]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CSRF_TRUSTED_ORIGINS = [
+    'https://darryl-formalistic-grimly.ngrok-free.dev'
+]
